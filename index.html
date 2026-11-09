@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Michael Carmona · Full Stack Developer con IA</title>
+  <meta name="description" content="Portafolio de Michael Carmona, Full Stack Developer con IA en Palmira, Colombia. Aplicaciones web completas, del frontend a la base de datos, con inteligencia artificial para resolver problemas reales.">
+  <meta name="theme-color" content="#07080c">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:title" content="Michael Carmona · Full Stack Developer con IA">
+  <meta property="og:description" content="Aplicaciones web completas, del frontend a la base de datos, con IA para resolver problemas reales. Proyectos en producción y código en GitHub.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Michael Carmona · Full Stack Developer con IA">
+  <meta name="twitter:description" content="Aplicaciones web completas, del frontend a la base de datos, con IA para resolver problemas reales.">
+
+  <!-- Favicon: cubo naranja/azul como SVG en línea -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23FF9A4D' d='M16 3l11 6-11 6L5 9z'/%3E%3Cpath fill='%23FF7A1A' d='M5 9l11 6v14L5 23z'/%3E%3Cpath fill='%232B4EFF' d='M27 9L16 15v14l11-6z'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Three.js solo por importmap (versión exacta) -->
+  <script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="brand" href="#inicio" aria-label="Michael Carmona, inicio">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><path fill="#FF9A4D" d="M16 3l11 6-11 6L5 9z"/><path fill="#FF7A1A" d="M5 9l11 6v14L5 23z"/><path fill="#2B4EFF" d="M27 9L16 15v14l11-6z"/></svg>
+        <span>Michael Carmona</span>
+      </a>
+      <button class="nav__toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav__menu" id="nav-menu" aria-label="Principal">
+        <a href="#inicio" data-link="inicio">Inicio</a>
+        <a href="#sobre-mi" data-link="sobre-mi">Sobre mí</a>
+        <a href="#stack" data-link="stack">Stack</a>
+        <a href="#proyectos" data-link="proyectos">Proyectos</a>
+        <a href="#contacto" data-link="contacto" class="nav__cta">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <p class="kicker reveal">Hola, soy</p>
+          <p class="hero__name reveal">Michael Carmona</p>
+          <h1 class="hero__title reveal" id="hero-title">Full Stack Developer <span class="grad">con IA</span></h1>
+          <p class="hero__pitch reveal">Construyo aplicaciones web completas, del frontend a la base de datos, y uso inteligencia artificial para resolver problemas reales.</p>
+          <div class="hero__cta reveal">
+            <a class="btn btn--primary" href="#proyectos">Ver proyectos
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--ghost" href="https://github.com/devcarmona18" target="_blank" rel="noopener noreferrer">GitHub
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          </div>
+          <p class="hero__loc reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            Palmira, Colombia
+          </p>
+        </div>
+
+        <div class="cube-stage reveal" id="cube-stage">
+          <div class="cube-stage__glow" aria-hidden="true"></div>
+          <div class="cube-host" id="cube-host" role="img" aria-label="Cubo de Rubik 3D que se desordena y se resuelve solo. Arrástralo para girarlo."></div>
+          <p class="cube-label"><span class="dot" aria-hidden="true"></span>Resolver problemas · Controlar el sistema</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOBRE MÍ ============ -->
+    <section class="section" id="sobre-mi" aria-labelledby="sobre-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">01 · Sobre mí</p>
+          <h2 id="sobre-title">Convierto problemas reales en software que funciona</h2>
+        </header>
+
+        <div class="about">
+          <div class="about__text reveal">
+            <p>Soy estudiante de Desarrollo de Software en la UNAD y tengo experiencia en el sector salud, en unidades renales. Esa experiencia me permite entender los problemas de verdad, los que viven las personas en su día a día, y convertirlos en software.</p>
+            <p>Me enfoco en productos completos y desplegados: diseño la interfaz, construyo la API, modelo la base de datos, automatizo las pruebas y lo publico. Donde aporta valor, integro inteligencia artificial.</p>
+            <ul class="stats" aria-label="Datos rápidos">
+              <li><strong>5</strong><span>proyectos</span></li>
+              <li><strong>3</strong><span>en producción</span></li>
+              <li><strong>Full</strong><span>Stack</span></li>
+            </ul>
+          </div>
+          <aside class="about__card glass reveal" aria-label="Ficha rápida">
+            <dl>
+              <div><dt>Ubicación</dt><dd>Palmira, Colombia</dd></div>
+              <div><dt>Estudios</dt><dd>Desarrollo de Software · UNAD</dd></div>
+              <div><dt>Experiencia</dt><dd>Sector salud (unidades renales)</dd></div>
+              <div><dt>Enfoque</dt><dd>Productos completos, desplegados y probados</dd></div>
+              <div><dt>Herramienta clave</dt><dd>IA aplicada a casos reales</dd></div>
+            </dl>
+          </aside>
+        </div>
+
+        <header class="section__head section__head--sub reveal">
+          <p class="eyebrow">Lo que hago</p>
+          <h3>Mi especialidad, de punta a punta</h3>
+        </header>
+
+        <div class="skills">
+          <article class="skill glass reveal">
+            <svg class="skill__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M9 9l-2 2 2 2M15 9l2 2-2 2"/></svg>
+            <h4>Frontend</h4>
+            <p>Interfaces rápidas, accesibles y pensadas para el celular, que se sienten bien al usarlas.</p>
+            <ul class="chips"><li>React</li><li>TypeScript</li><li>JavaScript</li><li>HTML/CSS</li><li>Tailwind</li><li>Vite</li></ul>
+          </article>
+          <article class="skill glass reveal">
+            <svg class="skill__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg>
+            <h4>Backend y APIs</h4>
+            <p>APIs claras y bien estructuradas, con validación, autenticación y lógica de negocio.</p>
+            <ul class="chips"><li>Python / FastAPI</li><li>Node / NestJS</li><li>PHP</li><li>REST</li></ul>
+          </article>
+          <article class="skill glass reveal">
+            <svg class="skill__icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+            <h4>Bases de datos</h4>
+            <p>Modelado relacional, consultas y migraciones para que los datos estén ordenados y seguros.</p>
+            <ul class="chips"><li>PostgreSQL</li><li>MySQL</li><li>SQLite</li><li>Supabase</li><li>SQLAlchemy</li></ul>
+          </article>
+          <article class="skill glass reveal">
+            <svg class="skill__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
+            <h4>IA aplicada</h4>
+            <p>Integro la API de Claude (Anthropic) en aplicaciones y automatizo tareas repetitivas.</p>
+            <ul class="chips"><li>API de Claude</li><li>Asistentes en apps</li><li>Automatización</li></ul>
+          </article>
+          <article class="skill glass reveal">
+            <svg class="skill__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 16.5A4.5 4.5 0 0 0 18 8a6 6 0 0 0-11.6 1.5A4 4 0 0 0 7 17.5h12"/><path d="M12 12v8m0 0l-3-3m3 3l3-3"/></svg>
+            <h4>DevOps y despliegue</h4>
+            <p>Contenedores, integración continua y publicación para que todo llegue a producción sin dolor.</p>
+            <ul class="chips"><li>Docker</li><li>GitHub Actions CI</li><li>Vercel</li><li>Render</li><li>Neon</li><li>Git</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STACK ============ -->
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">02 · Stack</p>
+          <h2 id="stack-title">Mi teclado de herramientas</h2>
+          <p class="section__lead">Pasa el cursor o toca una tecla para ver a qué categoría pertenece.</p>
+        </header>
+
+        <div class="kb-wrap reveal">
+          <div class="kb-scene">
+            <ul class="kb" id="kb">
+              <li><button class="key key--o" data-cat="Frontend · Lenguaje" type="button">JavaScript</button></li>
+              <li><button class="key key--o" data-cat="Frontend · Lenguaje" type="button">TypeScript</button></li>
+              <li><button class="key key--o" data-cat="Frontend · Librería" type="button">React</button></li>
+              <li><button class="key key--o" data-cat="Frontend · Herramienta de build" type="button">Vite</button></li>
+              <li><button class="key key--o" data-cat="Frontend · Marcado" type="button">HTML5</button></li>
+              <li><button class="key key--o" data-cat="Frontend · Estilos" type="button">CSS3</button></li>
+              <li><button class="key key--o" data-cat="Frontend · Estilos" type="button">Tailwind</button></li>
+              <li><button class="key key--b" data-cat="Backend · Lenguaje" type="button">Python</button></li>
+              <li><button class="key key--b" data-cat="Backend · Framework" type="button">FastAPI</button></li>
+              <li><button class="key key--b" data-cat="Backend · Entorno de ejecución" type="button">Node.js</button></li>
+              <li><button class="key key--b" data-cat="Backend · Framework" type="button">NestJS</button></li>
+              <li><button class="key key--b" data-cat="Backend · Lenguaje" type="button">PHP</button></li>
+              <li><button class="key key--b" data-cat="Base de datos" type="button">PostgreSQL</button></li>
+              <li><button class="key key--b" data-cat="Base de datos" type="button">MySQL</button></li>
+              <li><button class="key key--b" data-cat="Base de datos" type="button">SQLite</button></li>
+              <li><button class="key key--b" data-cat="Base de datos · Backend como servicio" type="button">Supabase</button></li>
+              <li><button class="key key--b" data-cat="DevOps · Contenedores" type="button">Docker</button></li>
+              <li><button class="key key--b" data-cat="DevOps · Integración continua" type="button">GitHub Actions</button></li>
+              <li><button class="key key--b" data-cat="DevOps · Control de versiones" type="button">Git</button></li>
+              <li><button class="key key--b" data-cat="DevOps · Despliegue" type="button">Vercel</button></li>
+              <li><button class="key key--b" data-cat="DevOps · Despliegue" type="button">Render</button></li>
+              <li><button class="key key--ia" data-cat="Inteligencia artificial" type="button">IA (Claude API)</button></li>
+              <li><button class="key key--o" data-cat="Frontend · App web progresiva" type="button">PWA</button></li>
+            </ul>
+          </div>
+          <p class="kb-caption" id="kb-caption" aria-live="polite">Selecciona una tecla</p>
+          <ul class="legend" aria-label="Leyenda de colores">
+            <li><span class="legend__sw legend__sw--o"></span>Frontend</li>
+            <li><span class="legend__sw legend__sw--b"></span>Backend, datos y despliegue</li>
+            <li><span class="legend__sw legend__sw--ia"></span>Inteligencia artificial</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTOS ============ -->
+    <section class="section" id="proyectos" aria-labelledby="proy-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">03 · Proyectos</p>
+          <h2 id="proy-title">Lo que he construido</h2>
+          <p class="section__lead">Tres productos completos y dos proyectos académicos de la UNAD.</p>
+        </header>
+
+        <!-- 01 -->
+        <article class="project" id="proyecto-01" aria-labelledby="p1-title">
+          <div class="project__media reveal">
+            <div class="browser">
+              <div class="browser__bar"><i></i><i></i><i></i><span>hoja-diaria-renal.onrender.com</span></div>
+              <div class="browser__view">
+                <img id="p1-main" src="assets/img/renal-sesion.png" width="1440" height="900" alt="Pantalla de sesión diaria de Hoja Diaria Renal con las estaciones y camas de hemodiálisis" loading="lazy" decoding="async">
+              </div>
+            </div>
+            <div class="thumbs" role="group" aria-label="Capturas de Hoja Diaria Renal">
+              <button class="thumb is-active" type="button" aria-pressed="true" data-src="assets/img/renal-sesion.png" data-alt="Pantalla de sesión diaria de Hoja Diaria Renal con las estaciones y camas de hemodiálisis">
+                <img src="assets/img/renal-sesion.png" width="1440" height="900" alt="" loading="lazy" decoding="async"><span>Sesión</span></button>
+              <button class="thumb" type="button" aria-pressed="false" data-src="assets/img/renal-estadisticas.png" data-alt="Pantalla de estadísticas de Hoja Diaria Renal con gráficos de la unidad">
+                <img src="assets/img/renal-estadisticas.png" width="1440" height="900" alt="" loading="lazy" decoding="async"><span>Estadísticas</span></button>
+              <button class="thumb" type="button" aria-pressed="false" data-src="assets/img/renal-inicio.png" data-alt="Pantalla de inicio de Hoja Diaria Renal">
+                <img src="assets/img/renal-inicio.png" width="1440" height="900" alt="" loading="lazy" decoding="async"><span>Inicio</span></button>
+            </div>
+          </div>
+          <div class="project__body reveal">
+            <div class="project__head"><span class="project__num">01</span><span class="badge badge--live">En producción</span></div>
+            <h3 id="p1-title">Hoja Diaria Renal</h3>
+            <p class="project__lead">Aplicación web para el registro diario de sesiones de hemodiálisis en una unidad renal. Reemplaza la planilla de papel y Excel.</p>
+            <ul class="points">
+              <li>Sesión diaria por turno con 3 estaciones de 16 camas (48 puestos) y guardado automático.</li>
+              <li>Cálculos automáticos de pérdida de peso y ganancia interdialítica, con alertas.</li>
+              <li>Programación mensual de EPO y hierro, y cierre del día imprimible.</li>
+              <li>Asistente con IA, CI con pruebas automatizadas y datos 100% ficticios.</li>
+            </ul>
+            <p class="project__note">Nació de mi experiencia en el sector salud: conozco el problema de primera mano.</p>
+            <p class="chips-label">Tecnologías</p>
+            <ul class="chips"><li>Python</li><li>FastAPI</li><li>SQLAlchemy</li><li>PostgreSQL (Neon)</li><li>Tailwind CSS</li><li>IA (Claude API)</li><li>Docker</li><li>GitHub Actions</li><li>Render</li></ul>
+            <div class="project__actions">
+              <a class="btn btn--primary btn--sm" href="https://hoja-diaria-renal.onrender.com" target="_blank" rel="noopener noreferrer">Demo</a>
+              <a class="btn btn--ghost btn--sm" href="https://github.com/devcarmona18/hoja-diaria-renal" target="_blank" rel="noopener noreferrer">Repo</a>
+            </div>
+            <p class="project__hint">En la demo usa el botón «Ver demo»: no necesita login.</p>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="project project--rev" id="proyecto-02" aria-labelledby="p2-title">
+          <div class="project__media reveal">
+            <div class="photos">
+              <figure class="photo"><img src="assets/img/fusion-castillo.jpg" width="736" height="981" alt="Bolsa de café especial Fusion D'Lauris, variedad Castillo" loading="lazy" decoding="async"></figure>
+              <figure class="photo photo--b"><img src="assets/img/fusion-cosecha.jpg" width="735" height="1104" alt="Bolsa de café especial Fusion D'Lauris, variedad Cosecha" loading="lazy" decoding="async"></figure>
+            </div>
+          </div>
+          <div class="project__body reveal">
+            <div class="project__head"><span class="project__num">02</span><span class="badge badge--deploy">Desplegado en Vercel</span></div>
+            <h3 id="p2-title">Fusion D'Lauris</h3>
+            <p class="project__lead">Tienda de café especial y cursos: el cliente arma su pedido en la web y la venta se cierra por WhatsApp.</p>
+            <ul class="points">
+              <li>Monorepo con frontend React y API NestJS en un solo proyecto de Vercel.</li>
+              <li>Cada pedido crea o actualiza al cliente en PostgreSQL (Supabase) con códigos FD-1001…</li>
+              <li>Panel /admin con estados del pedido, de cotizado a entregado.</li>
+              <li>Bot de WhatsApp gratuito basado en reglas sobre el catálogo, y respaldo si la API falla: no se pierde la venta.</li>
+            </ul>
+            <p class="chips-label">Tecnologías</p>
+            <ul class="chips"><li>React</li><li>TypeScript</li><li>Vite</li><li>NestJS</li><li>Node.js</li><li>PostgreSQL (Supabase)</li><li>Vercel</li><li>WhatsApp Cloud API</li></ul>
+            <div class="project__actions">
+              <a class="btn btn--primary btn--sm" href="https://fusion-dlauris.vercel.app" target="_blank" rel="noopener noreferrer">Demo</a>
+              <span class="btn btn--disabled btn--sm" aria-disabled="true">Repo privado</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="project" id="proyecto-03" aria-labelledby="p3-title">
+          <div class="project__media reveal">
+            <div class="phones">
+              <div class="phone"><img src="assets/img/midia-dia-oscuro.png" width="540" height="1099" alt="Mi Día PWA: pantalla del día con los hábitos de gym, alimentación, sueño, agua y oración" loading="lazy" decoding="async"></div>
+              <div class="phone phone--b"><img src="assets/img/midia-calendario-oscuro.png" width="540" height="1099" alt="Mi Día PWA: vista de calendario con el progreso de hábitos" loading="lazy" decoding="async"></div>
+            </div>
+          </div>
+          <div class="project__body reveal">
+            <div class="project__head"><span class="project__num">03</span><span class="badge badge--live">En producción</span></div>
+            <h3 id="p3-title">Mi Día PWA</h3>
+            <p class="project__lead">App web progresiva de hábitos diarios (gym, alimentación, sueño, agua, oración). Se instala en Android y funciona sin internet.</p>
+            <ul class="points">
+              <li>Instalable con manifest y service worker, 100% offline.</li>
+              <li>Cuentas locales con contraseña con hash y salt (Web Crypto API).</li>
+              <li>Modo claro y oscuro automático.</li>
+              <li>Exportar e importar tus datos.</li>
+            </ul>
+            <p class="chips-label">Tecnologías</p>
+            <ul class="chips"><li>JavaScript</li><li>HTML5</li><li>CSS3</li><li>PWA</li><li>Service Worker</li><li>Web Crypto API</li><li>localStorage</li></ul>
+            <div class="project__actions">
+              <a class="btn btn--primary btn--sm" href="https://devcarmona18.github.io/mi-dia-pwa/" target="_blank" rel="noopener noreferrer">Demo</a>
+              <a class="btn btn--ghost btn--sm" href="https://github.com/devcarmona18/mi-dia-pwa" target="_blank" rel="noopener noreferrer">Repo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 y 05 -->
+        <div class="minis">
+          <article class="mini glass reveal" id="proyecto-04" aria-labelledby="p4-title">
+            <div class="mini__art" aria-hidden="true">
+              <svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7A1A"/><stop offset="1" stop-color="#2B4EFF"/></linearGradient>
+                  <linearGradient id="g4b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B4EFF" stop-opacity=".9"/><stop offset="1" stop-color="#2B4EFF" stop-opacity=".2"/></linearGradient>
+                </defs>
+                <rect width="400" height="220" fill="#0b0d14"/>
+                <rect x="40" y="26" width="320" height="170" rx="12" fill="#11141e" stroke="#ffffff" stroke-opacity=".12"/>
+                <rect x="40" y="26" width="320" height="24" rx="12" fill="#161a27"/>
+                <circle cx="58" cy="38" r="3.5" fill="#FF7A1A"/><circle cx="70" cy="38" r="3.5" fill="#2B4EFF"/><circle cx="82" cy="38" r="3.5" fill="#ffffff" fill-opacity=".4"/>
+                <rect x="52" y="62" width="62" height="122" rx="8" fill="#0b0d14"/>
+                <rect x="60" y="72" width="46" height="7" rx="3.5" fill="url(#g4)"/>
+                <rect x="60" y="90" width="38" height="5" rx="2.5" fill="#fff" fill-opacity=".18"/>
+                <rect x="60" y="102" width="42" height="5" rx="2.5" fill="#fff" fill-opacity=".18"/>
+                <rect x="60" y="114" width="34" height="5" rx="2.5" fill="#fff" fill-opacity=".18"/>
+                <rect x="126" y="62" width="64" height="36" rx="8" fill="#0b0d14"/><rect x="134" y="72" width="30" height="6" rx="3" fill="#FF7A1A"/><rect x="134" y="84" width="46" height="5" rx="2.5" fill="#fff" fill-opacity=".2"/>
+                <rect x="198" y="62" width="64" height="36" rx="8" fill="#0b0d14"/><rect x="206" y="72" width="30" height="6" rx="3" fill="#2B4EFF"/><rect x="206" y="84" width="46" height="5" rx="2.5" fill="#fff" fill-opacity=".2"/>
+                <rect x="270" y="62" width="82" height="36" rx="8" fill="#0b0d14"/><rect x="278" y="72" width="36" height="6" rx="3" fill="url(#g4)"/><rect x="278" y="84" width="60" height="5" rx="2.5" fill="#fff" fill-opacity=".2"/>
+                <rect x="126" y="108" width="226" height="76" rx="8" fill="#0b0d14"/>
+                <rect x="138" y="150" width="16" height="26" rx="3" fill="url(#g4b)"/><rect x="162" y="136" width="16" height="40" rx="3" fill="url(#g4b)"/><rect x="186" y="144" width="16" height="32" rx="3" fill="url(#g4b)"/><rect x="210" y="122" width="16" height="54" rx="3" fill="url(#g4)"/><rect x="234" y="140" width="16" height="36" rx="3" fill="url(#g4b)"/>
+                <rect x="264" y="124" width="76" height="5" rx="2.5" fill="#fff" fill-opacity=".2"/><rect x="264" y="138" width="60" height="5" rx="2.5" fill="#fff" fill-opacity=".14"/><rect x="264" y="152" width="70" height="5" rx="2.5" fill="#fff" fill-opacity=".14"/><rect x="264" y="166" width="48" height="5" rx="2.5" fill="#fff" fill-opacity=".14"/>
+              </svg>
+            </div>
+            <div class="mini__body">
+              <div class="project__head"><span class="project__num">04</span><span class="badge badge--acad">Proyecto académico (UNAD)</span></div>
+              <h3 id="p4-title">SIGUR</h3>
+              <p class="project__lead">Sistema web de gestión para una unidad renal: pacientes, programación de sesiones, reportes y dashboard, con arquitectura MVC.</p>
+              <p class="chips-label">Tecnologías</p>
+              <ul class="chips"><li>PHP</li><li>MySQL</li><li>JavaScript</li><li>HTML/CSS</li><li>MVC</li></ul>
+            </div>
+          </article>
+
+          <article class="mini glass reveal" id="proyecto-05" aria-labelledby="p5-title">
+            <div class="mini__art" aria-hidden="true">
+              <svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7A1A"/><stop offset="1" stop-color="#2B4EFF"/></linearGradient>
+                </defs>
+                <rect width="400" height="220" fill="#0b0d14"/>
+                <g stroke="url(#g5)" stroke-width="2" fill="none" stroke-linecap="round">
+                  <path d="M138 70h54v50"/><path d="M262 70h-30v50h-40"/><path d="M138 160h-30v-30"/><path d="M262 160h46"/>
+                </g>
+                <g fill="#11141e" stroke="#ffffff" stroke-opacity=".16">
+                  <rect x="40" y="46" width="98" height="64" rx="8"/><rect x="262" y="46" width="98" height="64" rx="8"/>
+                  <rect x="150" y="120" width="100" height="64" rx="8"/><rect x="40" y="130" width="68" height="50" rx="8"/><rect x="308" y="136" width="62" height="44" rx="8"/>
+                </g>
+                <g>
+                  <rect x="40" y="46" width="98" height="16" rx="8" fill="#FF7A1A"/><rect x="262" y="46" width="98" height="16" rx="8" fill="#2B4EFF"/>
+                  <rect x="150" y="120" width="100" height="16" rx="8" fill="url(#g5)"/><rect x="40" y="130" width="68" height="14" rx="7" fill="#2B4EFF" fill-opacity=".8"/><rect x="308" y="136" width="62" height="13" rx="6.5" fill="#FF7A1A" fill-opacity=".8"/>
+                </g>
+                <g fill="#fff" fill-opacity=".2">
+                  <rect x="50" y="72" width="60" height="5" rx="2.5"/><rect x="50" y="84" width="46" height="5" rx="2.5"/><rect x="50" y="96" width="54" height="5" rx="2.5"/>
+                  <rect x="272" y="72" width="60" height="5" rx="2.5"/><rect x="272" y="84" width="46" height="5" rx="2.5"/><rect x="272" y="96" width="54" height="5" rx="2.5"/>
+                  <rect x="160" y="146" width="62" height="5" rx="2.5"/><rect x="160" y="158" width="48" height="5" rx="2.5"/><rect x="160" y="170" width="56" height="5" rx="2.5"/>
+                  <rect x="50" y="154" width="42" height="5" rx="2.5"/><rect x="50" y="166" width="30" height="5" rx="2.5"/>
+                  <rect x="318" y="158" width="38" height="5" rx="2.5"/><rect x="318" y="168" width="26" height="5" rx="2.5"/>
+                </g>
+                <g fill="#FF7A1A"><circle cx="138" cy="70" r="4"/><circle cx="262" cy="70" r="4"/><circle cx="192" cy="120" r="4"/></g>
+              </svg>
+            </div>
+            <div class="mini__body">
+              <div class="project__head"><span class="project__num">05</span><span class="badge badge--acad">Proyecto académico (UNAD)</span></div>
+              <h3 id="p5-title">FerreHogar</h3>
+              <p class="project__lead">Modelado y administración de base de datos para una ferretería: modelo relacional, scripts de creación e inserción, y migración de MySQL a PostgreSQL.</p>
+              <p class="chips-label">Tecnologías</p>
+              <ul class="chips"><li>MySQL</li><li>PostgreSQL</li><li>SQL</li><li>Modelado ER</li></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACTO ============ -->
+    <section class="section section--contact" id="contacto" aria-labelledby="contacto-title">
+      <div class="container">
+        <div class="contact glass reveal">
+          <p class="eyebrow">04 · Contacto</p>
+          <h2 id="contacto-title">¿Construimos algo <span class="grad">juntos</span>?</h2>
+          <p class="section__lead">Cuéntame tu idea o el problema que quieres resolver. Me encantan los proyectos con impacto real.</p>
+          <div class="contact__actions">
+            <a class="btn btn--primary" href="https://github.com/devcarmona18" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="btn btn--blue" href="mailto:devcarmona18@gmail.com">Correo</a>
+            <a class="btn btn--ghost" href="https://www.linkedin.com/in/david-carmona-g" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© 2026 Michael Carmona · Hecho con HTML, CSS, JS y Three.js</p>
+      <a href="#inicio">Volver arriba ↑</a>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
