@@ -113,7 +113,7 @@ export default function Contacto() {
 
       <footer className="wrap mt-20 md:mt-32">
         <div className="mono flex flex-col gap-4 text-muted md:flex-row md:items-center md:justify-between">
-          <p className="!normal-case !tracking-[0.04em]">© 2026 Michael Carmona — Diseñado y construido por mí. Next.js, GSAP, Three.js.</p>
+          <p className="!tracking-[0.5em] text-ink/80" aria-label="Iniciales MDCG">MDCG</p>
           <a href="#" onClick={(e) => { e.preventDefault(); scrollToTarget(0); }} className="link-u self-start text-ink md:self-auto">Volver arriba ↑</a>
         </div>
         <p data-wordmark aria-hidden="true" className="display outline-text mt-6 select-none whitespace-nowrap pb-[4vw] text-center md:pb-0 text-[min(25vw,25rem)] leading-[0.78] md:mt-10">

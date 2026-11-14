@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Magnetic from './Magnetic';
 import { CubePoster } from './CubePoster';
 import { scrollToTarget } from '@/lib/scroll';
+import ScrollCue from './ScrollCue';
 
 const Cube = dynamic(() => import('./Cube'), {
   ssr: false,
@@ -124,8 +125,8 @@ export default function Hero() {
           <span className="block mt-[0.1em]"><Line text="RESUELVE." orangeLast /></span>
         </h1>
 
-        <div className="relative z-20 mx-auto mt-2 aspect-square w-[82vw] max-w-[460px] md:absolute md:right-[-3vw] md:top-1/2 md:mt-0 md:w-[48vw] md:max-w-[780px] md:-translate-y-[46%]">
-          <Cube scrollRef={scrollProg} onCaption={setCaption} className="h-full w-full" />
+        <div className="relative z-20 mx-auto mt-2 aspect-square w-[74vw] max-w-[460px] md:absolute md:right-[-3vw] md:top-1/2 md:mt-0 md:w-[48vw] md:max-w-[780px] md:-translate-y-[46%]">
+          <Cube scrollRef={scrollProg} onCaption={setCaption} bleedRef={root} className="h-full w-full" />
           <div className="absolute inset-x-0 -bottom-1 md:-bottom-4">
             <Caption text={caption} />
           </div>
@@ -133,7 +134,7 @@ export default function Hero() {
 
         <div data-in className="relative z-10 mt-6 max-w-[34rem] md:mt-10">
           <p className="text-[1.0625rem] leading-relaxed text-ink/90 md:text-lg">
-            Tomo los problemas que hoy se resuelven a mano —en papel, en Excel, a última hora— y los convierto en sistemas que trabajan solos.
+            Construyo, transformo y automatizo sistemas para la eficiencia y eficacia de los proyectos a realizar.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
             <Magnetic>
@@ -152,11 +153,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <div data-in className="wrap mono mt-8 flex items-center gap-4 text-muted">
-        <span>(SCROLL)</span>
-        <span className="relative h-px w-16 overflow-hidden bg-line">
-          <span className="absolute inset-0 bg-accent" style={{ animation: 'scrollline 2.2s cubic-bezier(.7,0,.3,1) infinite' }} />
-        </span>
+      <div className="wrap mt-8 h-[88px] md:mt-8 md:h-auto">
+        <ScrollCue />
       </div>
     </section>
   );

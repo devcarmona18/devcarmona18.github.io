@@ -67,6 +67,20 @@ body {
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .marquee-track { display: flex; width: max-content; animation: marquee 28s linear infinite; }
 
+@keyframes cue-in { from { opacity: 0; } to { opacity: 1; } }
+.cue-in { animation: cue-in 0.9s ease-out 2.2s backwards; }
+@keyframes cue-wheel { 0% { transform: translate(-50%, 0); opacity: 0; } 20% { opacity: 1; } 70% { opacity: 1; } 100% { transform: translate(-50%, 18px); opacity: 0; } }
+.cue-wheel { animation: cue-wheel 1.8s cubic-bezier(.5,0,.3,1) infinite; }
+@keyframes cue-chev { 0%, 100% { opacity: 0.15; transform: translateY(-2px); } 50% { opacity: 1; transform: translateY(3px); } }
+.cue-chev { animation: cue-chev 1.5s ease-in-out infinite; }
+@keyframes tile-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.tile-float { animation: tile-float var(--fd, 5s) ease-in-out var(--fl, 0s) infinite; }
+@keyframes beam-pulse { from { stroke-dashoffset: 1; } to { stroke-dashoffset: -0.2; } }
+.beam-pulse { stroke-dasharray: 0.14 1; animation: beam-pulse 1.5s linear infinite; }
+@keyframes grid-pan { from { background-position: 0 0, 0 0; } to { background-position: 32px 32px, 32px 32px; } }
+@keyframes scan { 0% { transform: translateY(-120%); } 100% { transform: translateY(520%); } }
+.demo-grid { background-image: linear-gradient(to right, rgba(242,240,235,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(242,240,235,0.045) 1px, transparent 1px); background-size: 32px 32px; animation: grid-pan 6s linear infinite; }
+.demo-scan { background: linear-gradient(to bottom, transparent, rgba(255,107,26,0.09), transparent); animation: scan 5.5s linear infinite; }
 @keyframes scrollline { 0% { transform: scaleX(0); transform-origin: left; } 50% { transform: scaleX(1); transform-origin: left; } 51% { transform-origin: right; } 100% { transform: scaleX(0); transform-origin: right; } }
 @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 @keyframes blink { 50% { opacity: 0; } }
@@ -74,44 +88,12 @@ body {
 
 .outline-text { color: transparent; -webkit-text-stroke: 1px #2c2c2c; }
 
-/* teclado */
-.keycap {
-  --d: 9px;
-  position: relative;
-  transform: translateY(0);
-  background: radial-gradient(120% 140% at 50% 0%, #3a3a3a 0%, #222 75%);
-  color: var(--ink);
-  border-radius: 8px;
-  box-shadow:
-    0 1px 0 #555 inset,
-    0 var(--d) 0 -1px #0b0b0b,
-    0 calc(var(--d) + 1px) 0 -1px #050505,
-    0 calc(var(--d) + 10px) 14px -4px rgba(0, 0, 0, 0.8);
-  transition: transform 90ms ease-out, box-shadow 90ms ease-out, color 160ms;
-}
-.keycap::before {
-  content: ''; position: absolute; inset: 5px 6px 7px; border-radius: 5px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(0,0,0,0.18));
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
-  pointer-events: none;
-}
-.keycap[data-pressed='true'] {
-  transform: translateY(calc(var(--d) - 2px));
-  color: var(--accent);
-  box-shadow:
-    0 1px 0 #3a3a3a inset,
-    0 2px 0 -1px #0b0b0b,
-    0 3px 5px -1px rgba(0, 0, 0, 0.8),
-    0 0 22px -2px rgba(255, 107, 26, 0.45);
-}
-@keyframes keywave { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(5px); } }
-.keycap.wave { animation: keywave 0.7s ease-in-out both; animation-delay: calc(var(--i) * 55ms); }
-@media (hover: hover) { .keycap:hover:not([data-pressed='true']) { color: var(--accent-hover); } }
-
 @media (prefers-reduced-motion: reduce) {
   .grain { animation: none; }
+  .demo-grid, .demo-scan { animation: none; }
   .marquee-track { animation-duration: 90s; }
-  .keycap.wave { animation: none; }
+  .cue-wheel, .cue-chev, .tile-float, .beam-pulse { animation: none !important; }
+  .cue-chev { opacity: 0.8; }
 }
 
 .link-u { position: relative; }

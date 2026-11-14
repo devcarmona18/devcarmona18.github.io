@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type MutableRefObject, type RefObject } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { CubePoster } from './CubePoster';
+import { ICONS, type IconSlug } from '@/data/icons';
 
 /* ------------------------------------------------------------------ */
 /* Datos                                                               */
@@ -14,23 +15,23 @@ interface FaceDef {
   normal: [number, number, number];
   right: [number, number, number];
   color: string;
-  labels: string[];
+  icons: IconSlug[];
 }
 
 /* up = normal × right en todas las caras */
 const FACES: FaceDef[] = [
   { area: 'FRONTEND', normal: [0, 1, 0], right: [1, 0, 0], color: '#F4F4F4',
-    labels: ['React', 'TS', 'JS', 'Next', 'Vite', 'Tailwind', 'HTML', 'CSS', 'PWA'] },
+    icons: ['react', 'typescript', 'javascript', 'nextdotjs', 'vite', 'tailwindcss', 'html5', 'css', 'pwa'] },
   { area: 'BACKEND', normal: [0, -1, 0], right: [1, 0, 0], color: '#FFD500',
-    labels: ['Python', 'FastAPI', 'Node', 'NestJS', 'PHP', 'REST', 'Auth', 'MVC', 'API'] },
+    icons: ['python', 'fastapi', 'nodedotjs', 'nestjs', 'php', 'express', 'swagger', 'jsonwebtokens', 'postman'] },
   { area: 'DATOS', normal: [0, 0, 1], right: [1, 0, 0], color: '#C41E3A',
-    labels: ['Postgres', 'MySQL', 'SQLite', 'Supabase', 'SQL', 'ORM', 'Neon', 'ER', 'Índices'] },
+    icons: ['postgresql', 'mysql', 'sqlite', 'supabase', 'sqlalchemy', 'mariadb', 'neon', 'dbeaver', 'prisma'] },
   { area: 'IA', normal: [0, 0, -1], right: [-1, 0, 0], color: '#FF5800',
-    labels: ['Claude', 'Agentes', 'Prompts', 'NLQ', 'Bots', 'Auto', 'Flujos', 'Asist.', 'Python'] },
+    icons: ['claude', 'googlegemini', 'githubcopilot', 'python', 'jupyter', 'huggingface', 'langchain', 'n8n', 'zapier'] },
   { area: 'DEVOPS', normal: [1, 0, 0], right: [0, 0, -1], color: '#0051BA',
-    labels: ['Docker', 'CI/CD', 'Actions', 'Git', 'Vercel', 'Render', 'Linux', 'Tests', 'Deploy'] },
+    icons: ['docker', 'githubactions', 'git', 'github', 'vercel', 'render', 'linux', 'ubuntu', 'nginx'] },
   { area: 'PRODUCTO', normal: [-1, 0, 0], right: [0, 0, 1], color: '#009E60',
-    labels: ['UX', 'UI', 'Mobile', 'Offline', 'Diseño', 'Datos', 'Clientes', 'Escala', 'Ship'] },
+    icons: ['figma', 'notion', 'trello', 'googleanalytics', 'whatsapp', 'android', 'googlechrome', 'lighthouse', 'googlesheets'] },
 ];
 
 interface Move {
@@ -68,8 +69,25 @@ const moveEase = (p: number) => easeInOutCubic(p) + 0.035 * Math.sin(Math.PI * p
 /* Texturas                                                            */
 /* ------------------------------------------------------------------ */
 
-function makeLabelTexture(text: string, bg: string): THREE.CanvasTexture {
-  const size = 192;
+function luminance(hex: string): number {
+  const n = parseInt(hex.slice(1), 16);
+  const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
+    const c = v / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+}
+
+/* negro o blanco, el que más contraste dé sobre el color del sticker */
+function inkFor(bg: string): string {
+  const l = luminance(bg);
+  const vsBlack = (l + 0.05) / (luminance('#0A0A0A') + 0.05);
+  const vsWhite = 1.05 / (l + 0.05);
+  return vsBlack >= vsWhite ? '#0A0A0A' : '#FFFFFF';
+}
+
+function makeIconTexture(slug: IconSlug, bg: string): THREE.CanvasTexture {
+  const size = 256;
   const c = document.createElement('canvas');
   c.width = size;
   c.height = size;
@@ -77,21 +95,15 @@ function makeLabelTexture(text: string, bg: string): THREE.CanvasTexture {
   if (g) {
     g.fillStyle = bg;
     g.fillRect(0, 0, size, size);
-    g.fillStyle = '#0A0A0A';
-    let fs = 52;
-    const font = (n: number) => `700 ${n}px "JetBrains Mono", ui-monospace, monospace`;
-    g.font = font(fs);
-    while (g.measureText(text).width > size * 0.8 && fs > 16) {
-      fs -= 2;
-      g.font = font(fs);
-    }
-    g.textAlign = 'center';
-    g.textBaseline = 'middle';
-    g.fillText(text, size / 2, size / 2 + 2);
+    g.fillStyle = inkFor(bg);
+    const k = (size * 0.6) / 24;
+    g.translate(size / 2 - 12 * k, size / 2 - 12 * k);
+    g.scale(k, k);
+    g.fill(new Path2D(ICONS[slug].path));
   }
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
-  t.anisotropy = 4;
+  t.anisotropy = 8;
   return t;
 }
 
@@ -178,7 +190,7 @@ function Cubie({ x, y, z, stickerGeo, baseMats, labelTex }: CubieProps) {
 /* Escena + máquina de estados                                         */
 /* ------------------------------------------------------------------ */
 
-type Phase = 'init' | 'solving' | 'labels' | 'hold' | 'scrambling' | 'pause';
+type Phase = 'intro' | 'init' | 'solving' | 'labels' | 'hold' | 'scrambling' | 'pause';
 
 interface DragState {
   vx: number;
@@ -189,11 +201,39 @@ interface DragState {
   active: boolean;
 }
 
+interface ViewRect {
+  /** esquina del canvas respecto al contenedor del cubo, en px */
+  ox: number;
+  oy: number;
+  w: number;
+  h: number;
+  /** lado del contenedor del cubo (cuadrado), en px */
+  s: number;
+}
+
 interface SceneProps {
   scrollRef: MutableRefObject<number>;
   onCaption: (t: string) => void;
+  onStart: () => void;
   forceSolved: boolean;
   dragRef: MutableRefObject<DragState>;
+  rectRef: MutableRefObject<ViewRect | null>;
+  camZ: number;
+}
+
+interface Piece {
+  start: THREE.Vector3;
+  mid: THREE.Vector3;
+  fin: THREE.Vector3;
+  finQ: THREE.Quaternion;
+  q: THREE.Quaternion;
+  axis: THREE.Vector3;
+  w: number;
+  c: number;
+  ph: number;
+  from: THREE.Vector3 | null;
+  fromQ: THREE.Quaternion | null;
+  cur: THREE.Vector3;
 }
 
 interface Anim {
@@ -219,11 +259,16 @@ interface Machine {
   moveDur: number;
   faceShown: number;
   base: THREE.Quaternion;
+  pieces: Piece[];
+  introT: number;
+  go: boolean;
+  started: boolean;
+  flash: number;
 }
 
 const FACE_T = 0.95;
 
-function CubeScene({ scrollRef, onCaption, forceSolved, dragRef }: SceneProps) {
+function CubeScene({ scrollRef, onCaption, onStart, forceSolved, dragRef, rectRef, camZ }: SceneProps) {
   const outer = useRef<THREE.Group>(null);
   const tilt = useRef<THREE.Group>(null);
   const spin = useRef<THREE.Group>(null);
@@ -235,7 +280,7 @@ function CubeScene({ scrollRef, onCaption, forceSolved, dragRef }: SceneProps) {
     () => FACES.map((f) => new THREE.MeshStandardMaterial({ color: f.color, roughness: 0.34, metalness: 0 })),
     [],
   );
-  const labelTex = useMemo(() => FACES.map((f) => f.labels.map((l) => makeLabelTexture(l, f.color))), []);
+  const labelTex = useMemo(() => FACES.map((f) => f.icons.map((slug) => makeIconTexture(slug, f.color))), []);
   useEffect(
     () => () => {
       stickerGeo.dispose();
@@ -267,7 +312,27 @@ function CubeScene({ scrollRef, onCaption, forceSolved, dragRef }: SceneProps) {
     moveDur: 0.32,
     faceShown: -1,
     base: new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.5, 0.65, 0)),
+    pieces: [],
+    introT: 0,
+    go: false,
+    started: false,
+    flash: 0,
   });
+  const rimLight = useRef<THREE.DirectionalLight>(null);
+  const glowLight = useRef<THREE.PointLight>(null);
+
+  useEffect(() => {
+    const s = m.current;
+    if (reduced || forceSolved || window.__mcReady) {
+      s.go = true;
+      return;
+    }
+    const on = () => {
+      s.go = true;
+    };
+    window.addEventListener('mc:ready', on, { once: true });
+    return () => window.removeEventListener('mc:ready', on);
+  }, [reduced, forceSolved]);
 
   useEffect(() => {
     const move = (e: PointerEvent) => {
@@ -313,6 +378,118 @@ function CubeScene({ scrollRef, onCaption, forceSolved, dragRef }: SceneProps) {
         s.scramble = randomScramble();
         s.scramble.forEach(applyInstant);
         s.queue = invert(s.scramble);
+        s.t = 0;
+        if (reduced) {
+          s.phase = 'init';
+          s.started = true;
+          onStart();
+          onCaption('ESTADO: MEZCLADO');
+        } else {
+          s.phase = 'intro';
+          root.visible = false;
+        }
+      }
+      if (forceSolved) {
+        s.started = true;
+        onStart();
+      }
+    }
+
+    /* ---- ensamblaje inicial: 27 piezas entran desde los bordes ---- */
+    if (s.phase === 'intro') {
+      if (!s.go) return;
+      const TD = 2.2;
+      const LAND = 0.85;
+      root.updateWorldMatrix(true, false);
+      if (!s.started) {
+        s.started = true;
+        const r = rectRef.current;
+        const u = (2 * camZ * Math.tan(THREE.MathUtils.degToRad(15))) / (r ? r.s : 1);
+        const minX = r ? (r.ox - r.s / 2) * u : -4;
+        const maxX = r ? (r.ox + r.w - r.s / 2) * u : 4;
+        const maxY = r ? (r.s / 2 - r.oy) * u : 4;
+        const minY = r ? (r.s / 2 - (r.oy + r.h)) * u : -4;
+        const order = Array.from({ length: s.cubies.length }, (_, i) => i).sort(() => Math.random() - 0.5);
+        s.pieces = s.cubies.map((g, i) => {
+          const edge = Math.floor(Math.random() * 4);
+          const out = Math.random() * 1.2 - 0.3;
+          const along = Math.random();
+          const st = new THREE.Vector3();
+          if (edge === 0) st.set(minX + along * (maxX - minX), maxY - 0.5 + out, 0);
+          else if (edge === 1) st.set(minX + along * (maxX - minX), minY + 0.5 - out, 0);
+          else if (edge === 2) st.set(minX + 0.5 - out, minY + along * (maxY - minY), 0);
+          else st.set(maxX - 0.5 + out, minY + along * (maxY - minY), 0);
+          st.z = -3.5 + Math.random() * 6;
+          const mid = st.clone().multiplyScalar(0.3 + Math.random() * 0.28);
+          mid.z = -2.5 + Math.random() * 5;
+          return {
+            start: st,
+            mid,
+            fin: g.position.clone(),
+            finQ: g.quaternion.clone(),
+            q: new THREE.Quaternion().random(),
+            axis: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(),
+            w: 2.4 + Math.random() * 3.2,
+            c: 2.2 + order[i] * 0.038,
+            ph: Math.random() * 6.28,
+            from: null,
+            fromQ: null,
+            cur: st.clone(),
+          };
+        });
+        root.visible = true;
+        onStart();
+        onCaption('ESTADO: ENSAMBLANDO');
+      }
+      const idt = Math.min(dtRaw, 0.2);
+      s.introT += idt;
+      const t = s.introT;
+      const tmp = new THREE.Vector3();
+      const dq = new THREE.Quaternion();
+      let landed = 0;
+      s.pieces.forEach((p, i) => {
+        const g = s.cubies[i];
+        if (t < p.c) {
+          const k = Math.min(1, t / p.c);
+          const e = 0.45 * k + 0.55 * (1 - (1 - k) * (1 - k));
+          p.cur.copy(p.start).lerp(p.mid, e);
+          p.cur.x += Math.sin(t * 1.7 + p.ph) * 0.35;
+          p.cur.y += Math.cos(t * 1.3 + p.ph * 1.7) * 0.35;
+          p.cur.z += Math.sin(t * 1.1 + p.ph * 0.6) * 0.5;
+          dq.setFromAxisAngle(p.axis, p.w * (1 - 0.5 * k) * idt);
+          p.q.premultiply(dq);
+          g.scale.setScalar(1);
+        } else {
+          if (!p.from) {
+            p.from = p.cur.clone();
+            p.fromQ = p.q.clone();
+          }
+          const k = Math.min(1, (t - p.c) / LAND);
+          const b = k - 1;
+          const eb = 1 + 2.5 * b * b * b + 1.5 * b * b;
+          tmp.copy(p.fin);
+          root.localToWorld(tmp);
+          p.cur.copy(p.from).lerp(tmp, eb);
+          const ek = 1 - Math.pow(1 - k, 3);
+          p.q.copy(p.fromQ ?? p.q).slerp(p.finQ, ek);
+          if (k >= 1) {
+            landed += 1;
+            const bt = Math.min(1, (t - p.c - LAND) / 0.3);
+            g.scale.setScalar(1 + 0.16 * Math.sin(Math.PI * bt) * (1 - bt * 0.3));
+          }
+        }
+        tmp.copy(p.cur);
+        root.worldToLocal(tmp);
+        g.position.copy(tmp);
+        g.quaternion.copy(p.q);
+      });
+      if (landed === s.pieces.length && t > 2.2 + 26 * 0.038 + LAND + 0.32) {
+        s.pieces.forEach((p, i) => {
+          s.cubies[i].position.copy(p.fin);
+          s.cubies[i].quaternion.copy(p.finQ);
+          s.cubies[i].scale.setScalar(1);
+        });
+        s.flash = 1;
         s.phase = 'init';
         s.t = 0;
         onCaption('ESTADO: MEZCLADO');
@@ -437,9 +614,12 @@ function CubeScene({ scrollRef, onCaption, forceSolved, dragRef }: SceneProps) {
       tilt.current.rotation.y += (pointer.current.x * 0.3 - tilt.current.rotation.y) * k;
       tilt.current.rotation.x += (pointer.current.y * 0.2 - tilt.current.rotation.x) * k;
     }
+    if (s.flash > 0) s.flash = Math.max(0, s.flash - dt / 0.9);
+    if (rimLight.current) rimLight.current.intensity = 1.6 + s.flash * s.flash * 7;
+    if (glowLight.current) glowLight.current.intensity = s.flash * s.flash * 40;
     if (outer.current) {
       const p = scrollRef.current;
-      outer.current.scale.setScalar(1 - 0.55 * p);
+      outer.current.scale.setScalar((1 - 0.55 * p) * (1 + 0.05 * Math.sin(Math.PI * (1 - s.flash)) * (s.flash > 0 ? 1 : 0)));
       outer.current.rotation.y = p * Math.PI * 1.2;
       outer.current.position.y = p * 0.9;
     }
@@ -450,7 +630,8 @@ function CubeScene({ scrollRef, onCaption, forceSolved, dragRef }: SceneProps) {
       <ambientLight intensity={0.9} />
       <directionalLight position={[4, 6, 6]} intensity={2.0} />
       <directionalLight position={[-5, 2, 3]} intensity={0.6} color="#fff3e6" />
-      <directionalLight position={[-3, 3, -6]} intensity={1.6} color="#FF6B1A" />
+      <directionalLight ref={rimLight} position={[-3, 3, -6]} intensity={1.6} color="#FF6B1A" />
+      <pointLight ref={glowLight} position={[0, 1, 7]} intensity={0} distance={16} decay={1.4} color="#FF6B1A" />
       <group ref={outer}>
         <group ref={tilt}>
           <group ref={spin}>
@@ -482,10 +663,25 @@ function hasWebGL(): boolean {
 interface CubeProps {
   scrollRef: MutableRefObject<number>;
   onCaption: (t: string) => void;
+  /** elemento que delimita el área por donde pueden volar las piezas (el hero) */
+  bleedRef: RefObject<HTMLElement>;
   className?: string;
 }
 
-export default function Cube({ scrollRef, onCaption, className = '' }: CubeProps) {
+/* Proyección con desplazamiento: el canvas es más grande que el cubo pero el cubo conserva su tamaño */
+function CameraRig({ rect }: { rect: ViewRect }) {
+  const camera = useThree((st) => st.camera) as THREE.PerspectiveCamera & { manual?: boolean };
+  const size = useThree((st) => st.size);
+  useLayoutEffect(() => {
+    camera.manual = true;
+    camera.aspect = 1;
+    camera.setViewOffset(rect.s, rect.s, rect.ox, rect.oy, rect.w, rect.h);
+    camera.updateProjectionMatrix();
+  }, [camera, rect, size.width, size.height]);
+  return null;
+}
+
+export default function Cube({ scrollRef, onCaption, bleedRef, className = '' }: CubeProps) {
   const wrap = useRef<HTMLDivElement>(null);
   const [gl, setGl] = useState<boolean | null>(null);
   const [visible, setVisible] = useState(true);
@@ -493,6 +689,8 @@ export default function Cube({ scrollRef, onCaption, className = '' }: CubeProps
   const [ready, setReady] = useState(false);
   const [forceSolved, setForceSolved] = useState(false);
   const [narrow, setNarrow] = useState(false);
+  const [rect, setRect] = useState<ViewRect | null>(null);
+  const rectRef = useRef<ViewRect | null>(null);
   const drag = useRef<DragState>({ vx: 0, vy: 0, dx: 0, dy: 0, last: 0, active: false });
   const pdata = useRef<{ id: number; x: number; y: number; t: number } | null>(null);
 
@@ -504,6 +702,37 @@ export default function Cube({ scrollRef, onCaption, className = '' }: CubeProps
     document.addEventListener('visibilitychange', onVis);
     return () => document.removeEventListener('visibilitychange', onVis);
   }, []);
+
+  useEffect(() => {
+    const el = wrap.current;
+    const hero = bleedRef.current;
+    if (!el || !hero) return;
+    const measure = () => {
+      const a = el.getBoundingClientRect();
+      const b = hero.getBoundingClientRect();
+      const next: ViewRect = {
+        ox: Math.round(b.left - a.left),
+        oy: Math.round(b.top - a.top),
+        w: Math.round(b.width),
+        h: Math.round(b.height),
+        s: Math.round(a.height),
+      };
+      const prev = rectRef.current;
+      if (prev && prev.ox === next.ox && prev.oy === next.oy && prev.w === next.w && prev.h === next.h && prev.s === next.s) return;
+      rectRef.current = next;
+      setRect(next);
+      setNarrow(window.innerWidth < 768);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    ro.observe(hero);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [bleedRef]);
 
   useEffect(() => {
     const el = wrap.current;
@@ -547,6 +776,8 @@ export default function Cube({ scrollRef, onCaption, className = '' }: CubeProps
     drag.current.last = now;
   };
 
+  const camZ = narrow ? 10.2 : 11.5;
+
   return (
     <div
       ref={wrap}
@@ -563,18 +794,27 @@ export default function Cube({ scrollRef, onCaption, className = '' }: CubeProps
           <CubePoster />
         </div>
       )}
-      {gl && (
+      {gl && rect && (
         <Canvas
           flat
-          dpr={[1, 2]}
+          dpr={[1, narrow ? 2 : 1.5]}
           frameloop={visible && docVisible ? 'always' : 'never'}
-          camera={{ position: [0, 0, narrow ? 10.2 : 11.5], fov: 30 }}
+          camera={{ position: [0, 0, camZ], fov: 30 }}
           gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-          onCreated={() => setReady(true)}
+          style={{ position: 'absolute', left: rect.ox, top: rect.oy, width: rect.w, height: rect.h, pointerEvents: 'none' }}
           role="img"
-          aria-label="Cubo de Rubik 3D interactivo: se mezcla, se resuelve y muestra las tecnologías que uso"
+          aria-label="Cubo de Rubik 3D interactivo: se arma, se mezcla, se resuelve y muestra los logos de las tecnologías que uso"
         >
-          <CubeScene scrollRef={scrollRef} onCaption={onCaption} forceSolved={forceSolved} dragRef={drag} />
+          <CameraRig rect={rect} />
+          <CubeScene
+            scrollRef={scrollRef}
+            onCaption={onCaption}
+            onStart={() => setReady(true)}
+            forceSolved={forceSolved}
+            dragRef={drag}
+            rectRef={rectRef}
+            camZ={camZ}
+          />
         </Canvas>
       )}
     </div>

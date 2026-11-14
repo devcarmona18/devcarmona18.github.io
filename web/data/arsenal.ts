@@ -1,6 +1,10 @@
+import type { IconSlug } from './icons';
+
 export interface Tool {
   id: string;
   label: string;
+  /** slug de simple-icons (data/icons.ts) */
+  icon: IconSlug;
   /** proyectos (ids de projects.ts o "portafolio") donde se usa */
   usedIn: string[];
   file: string;
@@ -12,20 +16,15 @@ export const usedInList: { id: string; name: string }[] = [
   { id: 'fusion', name: "Fusion D'Lauris" },
   { id: 'midia', name: 'Mi Día' },
   { id: 'sigur', name: 'SIGUR' },
-  { id: 'ferrehogar', name: 'Ferrehogar' },
-  { id: 'portafolio', name: 'Este portafolio' },
+  { id: 'ferrehogar', name: 'FerreHogar' },
 ];
 
-export const toolRows: string[][] = [
-  ['react', 'typescript', 'nextjs', 'tailwind', 'vite', 'python'],
-  ['fastapi', 'nodejs', 'nestjs', 'php', 'postgresql', 'mysql'],
-  ['supabase', 'sqlalchemy', 'docker', 'actions', 'git', 'vercel'],
-  ['render', 'claude', 'pwa', 'linux'],
-];
+/** Fila extra, más discreta: herramientas que hoy solo viven en este sitio. */
+export const portfolioRow = { id: 'portafolio', name: 'Este portafolio' };
 
 export const tools: Tool[] = [
   {
-    id: 'react', label: 'React', usedIn: ['fusion'],
+    id: 'react', label: 'React', icon: 'react', usedIn: ['fusion'],
     file: 'fusion-dlauris/apps/web/src/main.tsx',
     snippet: [
       '<BrowserRouter>',
@@ -36,7 +35,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'typescript', label: 'TypeScript', usedIn: ['fusion', 'portafolio'],
+    id: 'typescript', label: 'TypeScript', icon: 'typescript', usedIn: ['fusion', 'portafolio'],
     file: 'fusion-dlauris/apps/web/src/types.ts',
     snippet: [
       'export interface CoffeeVariety {',
@@ -48,7 +47,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'nextjs', label: 'Next.js', usedIn: ['portafolio'],
+    id: 'nextjs', label: 'Next.js', icon: 'nextdotjs', usedIn: ['portafolio'],
     file: 'portafolio-v2/next.config.mjs',
     snippet: [
       'const nextConfig = {',
@@ -59,7 +58,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'tailwind', label: 'Tailwind', usedIn: ['renal', 'portafolio'],
+    id: 'tailwind', label: 'Tailwind', icon: 'tailwindcss', usedIn: ['renal', 'portafolio'],
     file: 'renal-diaria/tailwind.config.js',
     snippet: [
       'module.exports = {',
@@ -71,7 +70,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'vite', label: 'Vite', usedIn: ['fusion'],
+    id: 'vite', label: 'Vite', icon: 'vite', usedIn: ['fusion'],
     file: 'fusion-dlauris/apps/web/vite.config.ts',
     snippet: [
       'export default defineConfig({',
@@ -83,7 +82,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'python', label: 'Python', usedIn: ['renal'],
+    id: 'python', label: 'Python', icon: 'python', usedIn: ['renal'],
     file: 'renal-diaria/routers/sesiones.py',
     snippet: [
       'if r.peso_entrada is not None and r.peso_salida is not None:',
@@ -94,7 +93,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'fastapi', label: 'FastAPI', usedIn: ['renal'],
+    id: 'fastapi', label: 'FastAPI', icon: 'fastapi', usedIn: ['renal'],
     file: 'renal-diaria/routers/sesiones.py',
     snippet: [
       '@router.patch("/registros/{registro_id}")',
@@ -105,7 +104,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'nodejs', label: 'Node.js', usedIn: ['fusion'],
+    id: 'nodejs', label: 'Node.js', icon: 'nodedotjs', usedIn: ['fusion'],
     file: 'fusion-dlauris/apps/api/src/main.ts',
     snippet: [
       'async function bootstrap() {',
@@ -117,7 +116,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'nestjs', label: 'NestJS', usedIn: ['fusion'],
+    id: 'nestjs', label: 'NestJS', icon: 'nestjs', usedIn: ['fusion'],
     file: 'fusion-dlauris/apps/api/src/orders/orders.controller.ts',
     snippet: [
       "@Controller('orders')",
@@ -129,7 +128,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'php', label: 'PHP', usedIn: ['sigur'],
+    id: 'php', label: 'PHP', icon: 'php', usedIn: ['sigur'],
     file: 'sigur-web/models/PatientModel.php',
     snippet: [
       'public function find(int $id): ?array',
@@ -141,7 +140,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'postgresql', label: 'PostgreSQL', usedIn: ['renal', 'fusion', 'ferrehogar'],
+    id: 'postgresql', label: 'PostgreSQL', icon: 'postgresql', usedIn: ['renal', 'fusion', 'ferrehogar'],
     file: 'Fase4_script_PostgreSQL_pgs_ferrehogar.sql',
     snippet: [
       'CREATE TABLE categoria (',
@@ -153,7 +152,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'mysql', label: 'MySQL', usedIn: ['sigur', 'ferrehogar'],
+    id: 'mysql', label: 'MySQL', icon: 'mysql', usedIn: ['sigur', 'ferrehogar'],
     file: 'Fase4_script_MySQL_ferrehogar.sql',
     snippet: [
       'CREATE TABLE producto (',
@@ -164,7 +163,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'supabase', label: 'Supabase', usedIn: ['fusion'],
+    id: 'supabase', label: 'Supabase', icon: 'supabase', usedIn: ['fusion'],
     file: 'fusion-dlauris/supabase/migrations/20261011000000_init.sql',
     snippet: [
       'create table if not exists public.coffee_varieties (',
@@ -176,7 +175,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'sqlalchemy', label: 'SQLAlchemy', usedIn: ['renal'],
+    id: 'sqlalchemy', label: 'SQLAlchemy', icon: 'sqlalchemy', usedIn: ['renal'],
     file: 'renal-diaria/models.py',
     snippet: [
       'class Paciente(Base):',
@@ -187,7 +186,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'docker', label: 'Docker', usedIn: ['renal'],
+    id: 'docker', label: 'Docker', icon: 'docker', usedIn: ['renal'],
     file: 'renal-diaria/Dockerfile',
     snippet: [
       'FROM python:3.12-slim',
@@ -198,7 +197,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'actions', label: 'GitHub Actions', usedIn: ['renal'],
+    id: 'actions', label: 'GitHub Actions', icon: 'githubactions', usedIn: ['renal'],
     file: 'renal-diaria/.github/workflows/ci.yml',
     snippet: [
       '- uses: actions/setup-python@v5',
@@ -210,7 +209,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'git', label: 'Git', usedIn: ['renal', 'fusion', 'midia'],
+    id: 'git', label: 'Git', icon: 'git', usedIn: ['renal', 'fusion', 'midia'],
     file: 'renal-diaria/render.yaml',
     snippet: [
       '# cada push a main se despliega solo',
@@ -219,7 +218,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'vercel', label: 'Vercel', usedIn: ['fusion'],
+    id: 'vercel', label: 'Vercel', icon: 'vercel', usedIn: ['fusion'],
     file: 'fusion-dlauris/vercel.json',
     snippet: [
       '$ vercel deploy --prod',
@@ -229,7 +228,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'render', label: 'Render', usedIn: ['renal'],
+    id: 'render', label: 'Render', icon: 'render', usedIn: ['renal'],
     file: 'renal-diaria/render.yaml',
     snippet: [
       'services:',
@@ -241,7 +240,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'claude', label: 'Claude API', usedIn: ['renal'],
+    id: 'claude', label: 'Claude API', icon: 'claude', usedIn: ['renal'],
     file: 'renal-diaria/routers/ia.py',
     snippet: [
       'client = _anth.Anthropic(api_key=api_key)',
@@ -253,7 +252,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'pwa', label: 'PWA', usedIn: ['midia'],
+    id: 'pwa', label: 'PWA', icon: 'pwa', usedIn: ['midia'],
     file: 'mi-dia-pwa/sw.js',
     snippet: [
       'var CACHE = "mi-dia-v1788266512421";',
@@ -264,7 +263,7 @@ export const tools: Tool[] = [
     ],
   },
   {
-    id: 'linux', label: 'Linux', usedIn: ['renal'],
+    id: 'linux', label: 'Linux', icon: 'linux', usedIn: ['renal'],
     file: 'renal-diaria/.github/workflows/ci.yml',
     snippet: [
       'docker:',
