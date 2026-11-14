@@ -16,8 +16,8 @@ function Row({ href, label, external = true, small = false, children }: { href: 
       className="group relative flex items-center justify-between overflow-hidden border-t border-line py-5 md:py-8"
     >
       <span className="absolute inset-0 origin-bottom scale-y-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-y-100" aria-hidden="true" />
-      <span className={`display relative z-10 px-0 ${small ? "text-[clamp(1.25rem,5.2vw,5.6rem)]" : "text-[clamp(1.7rem,6.2vw,5.6rem)]"} transition-all duration-500 group-hover:translate-x-3 group-hover:text-bg md:group-hover:translate-x-6`}>{label}</span>
-      <span className="relative z-10 flex items-center gap-3 pr-1 transition-colors duration-300 group-hover:text-bg md:pr-4">
+      <span className={`display relative z-10 px-0 ${small ? "text-[clamp(0.95rem,3.6vw,3.9rem)]" : "text-[clamp(1.3rem,4.3vw,3.9rem)]"} transition-all duration-500 group-hover:translate-x-3 group-hover:text-onAccent md:group-hover:translate-x-6`}>{label}</span>
+      <span className="relative z-10 flex items-center gap-3 pr-1 transition-colors duration-300 group-hover:text-onAccent md:pr-4">
         {children}
         <ArrowUpRight className="h-6 w-6 transition-transform duration-500 group-hover:rotate-45 md:h-12 md:w-12" strokeWidth={1.5} />
       </span>
@@ -81,8 +81,8 @@ export default function Contacto() {
 
       <div className="wrap">
         <p className="mono text-muted">(05) CONTACTO</p>
-        <h2 id="hablemos" data-hb className="display mt-4 overflow-hidden text-[min(22.6vw,24rem)] leading-[0.84]">
-          <span className="block">HABLEMOS<span className="text-accent">.</span></span>
+        <h2 id="hablemos" data-hb className="display mt-4 overflow-hidden text-[min(14.6vw,16rem)] leading-[0.9]">
+          <span className="block">HABLEMOS<span className="period" aria-hidden="true" /></span>
         </h2>
         <p className="mt-6 max-w-xl text-xl md:mt-10 md:text-2xl">
           ¿Tienes un proceso que todavía se hace a mano? Ese es exactamente mi tipo de problema.
@@ -116,7 +116,7 @@ export default function Contacto() {
           <p className="!tracking-[0.5em] text-ink/80" aria-label="Iniciales MDCG">MDCG</p>
           <a href="#" onClick={(e) => { e.preventDefault(); scrollToTarget(0); }} className="link-u self-start text-ink md:self-auto">Volver arriba ↑</a>
         </div>
-        <p data-wordmark aria-hidden="true" className="display outline-text mt-6 select-none whitespace-nowrap pb-[4vw] text-center md:pb-0 text-[min(25vw,25rem)] leading-[0.78] md:mt-10">
+        <p data-wordmark aria-hidden="true" className="display outline-text mt-6 select-none whitespace-nowrap pb-[4vw] text-center md:pb-0 text-[min(18vw,18rem)] leading-[0.82] md:mt-10">
           CARMONA
         </p>
       </footer>

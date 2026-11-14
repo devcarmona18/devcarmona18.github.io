@@ -1,4 +1,4 @@
-@import '@fontsource/anton/400.css';
+@import '@fontsource/bricolage-grotesque/800.css';
 @import '@fontsource-variable/manrope';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/700.css';
@@ -8,26 +8,45 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0a0a0a;
-  --surface: #111111;
-  --surface2: #161616;
-  --line: #232323;
-  --ink: #f2f0eb;
-  --muted: #8a8780;
-  --accent: #ff6b1a;
-  --accent-hover: #ff8a47;
+  /* Canal RGB para que Tailwind admita opacidades (bg-ink/10). Recolorear = cambiar una línea. */
+  --bg: 244 242 238;        /* #F4F2EE papel */
+  --surface: 255 255 255;   /* #FFFFFF */
+  --surface2: 236 233 227;  /* #ECE9E3 */
+  --line: 216 213 206;      /* #D8D5CE */
+  --ink: 10 10 10;          /* #0A0A0A */
+  --muted: 107 104 96;      /* #6B6860 */
+  --dim: 181 177 168;       /* #B5B1A8 frases sin encender */
+  --accent: 29 78 216;      /* #1D4ED8 azul */
+  --accent-hover: 47 107 255; /* #2F6BFF */
+  --on-accent: 255 255 255;
   --gutter: 16px;
+  color-scheme: light;
+}
+/* Ventanas oscuras de contraste (editor, terminal, demos): redefinen los tokens dentro de su ámbito */
+.panel-dark {
+  --bg: 14 14 16;           /* #0E0E10 */
+  --surface: 14 14 16;
+  --surface2: 26 26 30;
+  --line: 44 44 50;
+  --ink: 236 236 240;
+  --muted: 142 142 152;
+  --accent: 92 140 255;     /* azul aclarado para contraste sobre negro */
+  --accent-hover: 128 166 255;
+  --on-accent: 10 10 10;
+  color-scheme: dark;
+  background-color: rgb(var(--bg));
+  color: rgb(var(--ink));
 }
 @media (min-width: 768px) { :root { --gutter: 32px; } }
 
-html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+html { background: rgb(var(--bg)); -webkit-text-size-adjust: 100%; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
 body {
-  background: var(--bg);
-  color: var(--ink);
+  background: rgb(var(--bg));
+  color: rgb(var(--ink));
   font-family: 'Manrope Variable', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.55;
@@ -36,21 +55,23 @@ body {
 }
 @media (min-width: 768px) { body { font-size: 17px; } }
 
-::selection { background: var(--accent); color: #0a0a0a; }
+::selection { background: rgb(var(--accent)); color: rgb(var(--on-accent)); }
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 3px; }
 
 @layer components {
-.display { font-family: 'Anton', Impact, sans-serif; text-transform: uppercase; line-height: 0.85; letter-spacing: -0.012em; font-weight: 400; }
+.display { font-family: 'Bricolage Grotesque', 'Arial Black', sans-serif; text-transform: uppercase; line-height: 0.9; letter-spacing: -0.045em; font-weight: 800; }
+/* punto final de los titulares: cuadrado azul */
+.period { display: inline-block; width: 0.17em; height: 0.17em; margin-left: 0.05em; background: rgb(var(--accent)); vertical-align: baseline; }
 .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; }
 .wrap { width: 100%; padding-left: var(--gutter); padding-right: var(--gutter); max-width: 1680px; margin: 0 auto; }
-.rule { border-top: 1px solid var(--line); }
+.rule { border-top: 1px solid rgb(var(--line)); }
 }
 
 /* grano */
 .grain {
-  position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: 0.045;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: 0.03; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   animation: grain 1s steps(6) infinite;
 }
 @keyframes grain {
@@ -79,14 +100,15 @@ body {
 .beam-pulse { stroke-dasharray: 0.14 1; animation: beam-pulse 1.5s linear infinite; }
 @keyframes grid-pan { from { background-position: 0 0, 0 0; } to { background-position: 32px 32px, 32px 32px; } }
 @keyframes scan { 0% { transform: translateY(-120%); } 100% { transform: translateY(520%); } }
-.demo-grid { background-image: linear-gradient(to right, rgba(242,240,235,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(242,240,235,0.045) 1px, transparent 1px); background-size: 32px 32px; animation: grid-pan 6s linear infinite; }
-.demo-scan { background: linear-gradient(to bottom, transparent, rgba(255,107,26,0.09), transparent); animation: scan 5.5s linear infinite; }
+.demo-grid { background-image: linear-gradient(to right, rgb(var(--ink) / 0.045) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--ink) / 0.045) 1px, transparent 1px); background-size: 32px 32px; animation: grid-pan 6s linear infinite; }
+.demo-scan { background: linear-gradient(to bottom, transparent, rgb(var(--accent) / 0.1), transparent); animation: scan 5.5s linear infinite; }
 @keyframes scrollline { 0% { transform: scaleX(0); transform-origin: left; } 50% { transform: scaleX(1); transform-origin: left; } 51% { transform-origin: right; } 100% { transform: scaleX(0); transform-origin: right; } }
 @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 @keyframes blink { 50% { opacity: 0; } }
-.caret::after { content: '▌'; margin-left: 2px; animation: blink 1s steps(1) infinite; color: var(--accent); }
+.caret::after { content: '▌'; margin-left: 2px; animation: blink 1s steps(1) infinite; color: rgb(var(--accent)); }
 
-.outline-text { color: transparent; -webkit-text-stroke: 1px #2c2c2c; }
+/* contorno: el relleno color papel tapa los contornos internos superpuestos de la fuente */
+.outline-text { color: rgb(var(--bg)); -webkit-text-stroke: 3px rgb(var(--ink)); paint-order: stroke fill; }
 
 @media (prefers-reduced-motion: reduce) {
   .grain { animation: none; }
@@ -99,3 +121,7 @@ body {
 .link-u { position: relative; }
 .link-u::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
 .link-u:hover::after { transform: scaleX(1); transform-origin: left; }
+
+@keyframes alert-glow { 0%, 100% { box-shadow: 0 0 0 0 rgb(var(--accent) / 0); } 50% { box-shadow: 0 0 28px -4px rgb(var(--accent) / 0.55); } }
+.alert-glow { animation: alert-glow 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .alert-glow { animation: none; } }

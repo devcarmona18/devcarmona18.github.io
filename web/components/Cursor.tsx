@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { tokenRgba } from '@/lib/tokens';
 
 export default function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
@@ -34,21 +35,23 @@ export default function Cursor() {
     const over = (e: PointerEvent) => {
       const t = e.target as Element | null;
       if (!t || !t.closest) return;
+      d.style.backgroundColor = tokenRgba('--ink', 1, t);
       const tagged = t.closest<HTMLElement>('[data-cursor]');
       const interactive = t.closest('a, button, [role="tab"], input, label, summary');
       if (tagged && tagged.dataset.cursor) {
         l.textContent = tagged.dataset.cursor;
-        gsap.to(r, { width: 84, height: 84, backgroundColor: 'rgba(255,107,26,1)', borderColor: 'rgba(255,107,26,1)', duration: 0.35, ease: 'power3.out' });
+        l.style.color = tokenRgba('--on-accent', 1, t);
+        gsap.to(r, { width: 84, height: 84, backgroundColor: tokenRgba('--accent', 1, t), borderColor: tokenRgba('--accent', 1, t), duration: 0.35, ease: 'power3.out' });
         gsap.to(l, { opacity: 1, duration: 0.2 });
         gsap.to(d, { scale: 0, duration: 0.2 });
       } else if (interactive) {
         l.textContent = '';
-        gsap.to(r, { width: 56, height: 56, backgroundColor: 'rgba(255,107,26,0)', borderColor: 'rgba(255,107,26,1)', duration: 0.35, ease: 'power3.out' });
+        gsap.to(r, { width: 56, height: 56, backgroundColor: tokenRgba('--accent', 0, t), borderColor: tokenRgba('--accent', 1, t), duration: 0.35, ease: 'power3.out' });
         gsap.to(l, { opacity: 0, duration: 0.1 });
         gsap.to(d, { scale: 1, duration: 0.2 });
       } else {
         l.textContent = '';
-        gsap.to(r, { width: 32, height: 32, backgroundColor: 'rgba(255,107,26,0)', borderColor: 'rgba(242,240,235,0.5)', duration: 0.35, ease: 'power3.out' });
+        gsap.to(r, { width: 32, height: 32, backgroundColor: tokenRgba('--accent', 0, t), borderColor: tokenRgba('--ink', 0.5, t), duration: 0.35, ease: 'power3.out' });
         gsap.to(l, { opacity: 0, duration: 0.1 });
         gsap.to(d, { scale: 1, duration: 0.2 });
       }
@@ -70,10 +73,10 @@ export default function Cursor() {
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed left-0 top-0 z-[100] hidden [@media(hover:hover)_and_(pointer:fine)]:block">
-      <div ref={ring} className="fixed left-0 top-0 flex items-center justify-center rounded-full border" style={{ width: 32, height: 32, borderColor: 'rgba(242,240,235,0.5)' }}>
-        <span ref={label} className="mono !text-[11px] !tracking-[0.1em] text-[#0a0a0a] opacity-0" />
+      <div ref={ring} className="fixed left-0 top-0 flex items-center justify-center rounded-full border" style={{ width: 32, height: 32, borderColor: 'rgb(var(--ink) / 0.5)' }}>
+        <span ref={label} className="mono !text-[11px] !tracking-[0.1em] text-onAccent opacity-0" />
       </div>
-      <div ref={dot} className="fixed left-0 top-0 h-[6px] w-[6px] rounded-full bg-ink mix-blend-difference" />
+      <div ref={dot} className="fixed left-0 top-0 h-[6px] w-[6px] rounded-full bg-ink" />
     </div>
   );
 }

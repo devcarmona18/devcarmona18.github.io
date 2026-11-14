@@ -29,8 +29,8 @@ function Field({ id, label, value, typing, onChange }: { id: string; label: stri
   return (
     <div>
       <label htmlFor={id} className="mono mb-2 block text-muted">{label}</label>
-      <div className={`flex items-stretch border bg-bg transition-[border-color,box-shadow] duration-300 ${typingNow ? 'border-accent shadow-[0_0_18px_-4px_rgba(255,107,26,0.6)]' : 'border-line'}`}>
-        <button type="button" aria-label={`Restar 0,1 a ${label}`} onClick={() => step(-0.1)} className="px-3 text-muted transition-colors hover:bg-accent hover:text-bg">
+      <div className={`flex items-stretch border bg-bg transition-[border-color,box-shadow] duration-300 ${typingNow ? 'border-accent shadow-[0_0_18px_-4px_rgb(var(--accent)/0.6)]' : 'border-line'}`}>
+        <button type="button" aria-label={`Restar 0,1 a ${label}`} onClick={() => step(-0.1)} className="px-3 text-muted transition-colors hover:bg-accent hover:text-onAccent">
           <Minus size={16} />
         </button>
         <input
@@ -46,7 +46,7 @@ function Field({ id, label, value, typing, onChange }: { id: string; label: stri
           onBlur={() => setText(fmt(value))}
           className={`min-w-0 flex-1 bg-transparent px-2 py-3 text-center font-mono text-xl tabular-nums text-ink outline-none ${typingNow ? 'caret' : ''}`}
         />
-        <button type="button" aria-label={`Sumar 0,1 a ${label}`} onClick={() => step(0.1)} className="px-3 text-muted transition-colors hover:bg-accent hover:text-bg">
+        <button type="button" aria-label={`Sumar 0,1 a ${label}`} onClick={() => step(0.1)} className="px-3 text-muted transition-colors hover:bg-accent hover:text-onAccent">
           <Plus size={16} />
         </button>
       </div>
@@ -143,19 +143,17 @@ export default function InterfacesDemo() {
         <Field id="peso-seco" label="Peso seco" value={seco} typing={null} onChange={(v) => { touch(); setSeco(v); }} />
         <Field id="peso-entrada" label="Peso entrada" value={entrada} typing={typing} onChange={(v) => { touch(); setEntrada(v); }} />
       </div>
-      <motion.div
-        animate={alert && !reduced ? { boxShadow: ['0 0 0 0 rgba(255,107,26,0)', '0 0 28px -4px rgba(255,107,26,0.55)', '0 0 0 0 rgba(255,107,26,0)'] } : { boxShadow: '0 0 0 0 rgba(255,107,26,0)' }}
-        transition={alert ? { duration: 1.8, repeat: Infinity } : { duration: 0.3 }}
-        className={`mt-6 border p-4 transition-colors duration-300 ${alert ? 'border-accent bg-accent/10' : 'border-line bg-bg/60'}`}
+      <div
+        className={`mt-6 border p-4 transition-colors duration-300 ${alert ? 'border-accent bg-accent/10' : 'border-line bg-bg/60'} ${alert && !reduced ? 'alert-glow' : ''}`}
       >
         <div className="flex items-end justify-between gap-3">
           <div>
             <p className="mono text-muted">Ganancia interdialítica</p>
-            <p className={`display mt-2 text-[clamp(3.5rem,9vw,5.5rem)] tabular-nums ${alert ? 'text-accent' : 'text-ink'}`} aria-live="off">
+            <p className={`display mt-2 text-[clamp(2.6rem,6.4vw,4rem)] tabular-nums ${alert ? 'text-accent' : 'text-ink'}`} aria-live="off">
               {fmt(shownGain)}<span className="ml-1 text-[0.35em] text-muted">kg</span>
             </p>
           </div>
-          <span className={`mono border px-2 py-1 transition-colors ${alert ? 'border-accent bg-accent text-bg' : 'border-line text-muted'}`}>
+          <span className={`mono border px-2 py-1 transition-colors ${alert ? 'border-accent bg-accent text-onAccent' : 'border-line text-muted'}`}>
             {alert ? 'ALERTA' : 'NORMAL'}
           </span>
         </div>
@@ -164,7 +162,7 @@ export default function InterfacesDemo() {
           <div className="absolute -top-1 bottom-[-4px] w-px bg-accent" style={{ left: `${(4.5 / 6) * 100}%` }} />
         </div>
         <div className="mono relative mt-2 h-4 text-[10px] text-muted"><span className="absolute left-0">0</span><span className="absolute -translate-x-1/2 text-accent" style={{ left: `${(4.5 / 6) * 100}%` }}>umbral 4,5</span><span className="absolute right-0">6 kg</span></div>
-      </motion.div>
+      </div>
       <p className="mono mt-4 text-muted">Se llena sola · toca los campos para probar tú.</p>
     </div>
   );

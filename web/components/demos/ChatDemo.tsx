@@ -68,16 +68,16 @@ function Spark({ reduced }: { reduced: boolean }) {
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full overflow-visible" role="img" aria-label="Línea en vivo con la ganancia interdialítica por sesión, con picos sobre 4,5 kg">
         <defs>
           <clipPath id="spark-clip"><rect x="0" y="-10" width={headX} height={H + 20} /></clipPath>
-          <linearGradient id="spark-fade" x1="0" x2="1"><stop offset="0" stopColor="#F2F0EB" stopOpacity="0.15" /><stop offset="0.4" stopColor="#F2F0EB" stopOpacity="1" /></linearGradient>
+          <linearGradient id="spark-fade" x1="0" x2="1"><stop offset="0" style={{ stopColor: 'rgb(var(--ink))' }} stopOpacity="0.15" /><stop offset="0.4" style={{ stopColor: 'rgb(var(--ink))' }} stopOpacity="1" /></linearGradient>
         </defs>
-        <line x1="0" x2={W} y1={thr} y2={thr} stroke="#FF6B1A" strokeDasharray="3 4" strokeWidth="1" opacity="0.6" />
+        <line x1="0" x2={W} y1={thr} y2={thr} className="stroke-accent" strokeDasharray="3 4" strokeWidth="1" opacity="0.6" />
         <g clipPath="url(#spark-clip)">
           <path d={d} fill="none" stroke="url(#spark-fade)" strokeWidth="1.7" strokeLinejoin="round" />
-          {pts.map(([x, y], i) => (sample(k0 + i) > 4.5 && x > 0 && x < headX ? <circle key={i} cx={x} cy={y} r="2.4" fill="#FF6B1A" /> : null))}
+          {pts.map(([x, y], i) => (sample(k0 + i) > 4.5 && x > 0 && x < headX ? <circle key={i} cx={x} cy={y} r="2.4" className="fill-accent" /> : null))}
         </g>
-        <line x1={headX} x2={headX} y1="0" y2={H} stroke="#FF6B1A" strokeWidth="1" opacity="0.35" strokeDasharray="2 3" />
-        <circle cx={headX} cy={headY} r="9" fill="#FF6B1A" opacity="0.18" />
-        <circle cx={headX} cy={headY} r="3.6" fill="#FF6B1A" />
+        <line x1={headX} x2={headX} y1="0" y2={H} className="stroke-accent" strokeWidth="1" opacity="0.35" strokeDasharray="2 3" />
+        <circle cx={headX} cy={headY} r="9" className="fill-accent" opacity="0.18" />
+        <circle cx={headX} cy={headY} r="3.6" className="fill-accent" />
       </svg>
     </div>
   );
@@ -133,7 +133,7 @@ export default function ChatDemo() {
           <p className={phase === 'q' ? 'caret' : ''}>{q}</p>
         </div>
         {(phase === 'think' || phase === 'a' || phase === 'done') && (
-          <div className="max-w-[92%] border border-accent/50 p-3 shadow-[0_0_24px_-10px_rgba(255,107,26,0.55)]">
+          <div className="max-w-[92%] border border-accent/50 p-3 shadow-[0_0_24px_-10px_rgb(var(--accent)/0.55)]">
             <p className="mono mb-1 flex items-center gap-2 text-accent">
               <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" /> Asistente · Claude
             </p>
@@ -148,7 +148,7 @@ export default function ChatDemo() {
       </div>
       <div className="mt-5 flex items-center justify-between">
         <p className="mono text-muted">Demo con datos ficticios.</p>
-        <button type="button" onClick={() => setRun((n) => n + 1)} className="mono inline-flex items-center gap-2 border border-accent px-3 py-2 text-accent transition-colors hover:bg-accent hover:text-bg">
+        <button type="button" onClick={() => setRun((n) => n + 1)} className="mono inline-flex items-center gap-2 border border-accent px-3 py-2 text-accent transition-colors hover:bg-accent hover:text-onAccent">
           Preguntar otra vez <RotateCcw size={12} />
         </button>
       </div>

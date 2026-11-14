@@ -30,7 +30,7 @@ function Row({ name, v, shown }: { name: string; v: number; shown: boolean }) {
       <span className="relative z-10 text-sm">{name}</span>
       <span className="mono relative z-10 !tracking-[0.04em] tabular-nums text-ink">{Math.round(n).toLocaleString('es-CO')}</span>
       <motion.span
-        className="absolute inset-y-[3px] left-0 bg-accent/25 shadow-[0_0_16px_-4px_rgba(255,107,26,0.6)]"
+        className="absolute inset-y-[3px] left-0 bg-accent/25 shadow-[0_0_16px_-4px_rgb(var(--accent)/0.6)]"
         initial={{ width: 0 }}
         animate={{ width: shown ? `${(v / MAX) * 100}%` : 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -110,14 +110,14 @@ export default function SqlDemo() {
         <button
           type="button"
           onClick={() => { kick.current = true; }}
-          className="mono inline-flex items-center gap-2 border border-accent px-3 py-2 text-accent transition-colors hover:bg-accent hover:text-bg"
+          className="mono inline-flex items-center gap-2 border border-accent px-3 py-2 text-accent transition-colors hover:bg-accent hover:text-onAccent"
         >
           {busy ? 'Ejecutando' : 'Ejecutar'} <Play size={12} fill="currentColor" className={busy ? 'animate-pulse' : ''} />
         </button>
         <span className="mono tabular-nums text-muted">{rows > 0 ? `${rows} filas · ${busy ? '…' : '12 ms'}` : '—'}</span>
       </div>
       <div className="relative mt-4 overflow-hidden border border-line">
-        {busy && !reduced && <span className="pointer-events-none absolute inset-x-0 top-0 z-20 h-px animate-pulse bg-accent shadow-[0_0_12px_2px_rgba(255,107,26,0.7)]" />}
+        {busy && !reduced && <span className="pointer-events-none absolute inset-x-0 top-0 z-20 h-px animate-pulse bg-accent shadow-[0_0_12px_2px_rgb(var(--accent)/0.7)]" />}
         <div className="mono grid grid-cols-[1fr_auto] border-b border-line px-3 py-2 text-muted"><span>categoria</span><span>ventas (COP miles)</span></div>
         <ul className="min-h-[9rem]">
           {vals.map(([name, v], i) => (

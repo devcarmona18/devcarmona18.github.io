@@ -75,7 +75,7 @@ function Tile({ p, onOpen }: TileProps) {
       <div className={`flex flex-col items-start gap-3 border-t border-line p-4 md:p-5 ${WIDE.has(p.id) ? 'md:min-w-0 md:flex-1 md:justify-between md:border-l md:border-t-0' : 'md:flex-row md:justify-between md:gap-4'}`}>
         <div className="min-w-0">
           <p className="mono text-muted">({p.num}) · {p.tag}</p>
-          <h3 className={`display mt-2 ${WIDE.has(p.id) ? 'text-[clamp(2rem,2.6vw,2.8rem)]' : 'text-[clamp(2rem,3.6vw,3.4rem)]'}`}>{p.name}</h3>
+          <h3 className={`display mt-2 ${WIDE.has(p.id) ? 'text-[clamp(1.45rem,1.8vw,1.95rem)]' : 'text-[clamp(1.45rem,2.4vw,2.3rem)]'}`}>{p.name}</h3>
           <p className="mt-2 max-w-[34rem] text-[0.95rem] text-ink/75">{p.hook}</p>
         </div>
         {p.live && <span className="mono shrink-0 pt-1 text-accent">● EN PRODUCCIÓN</span>}
@@ -120,9 +120,9 @@ export default function Trabajo() {
           <p className="mono text-muted">(04) TRABAJO</p>
           <p className="mono text-muted">5 PROYECTOS — 2025/2026</p>
         </div>
-        <h2 id="trab-title" data-trab-title className="display mt-6 text-[clamp(3.6rem,12.4vw,13rem)] md:mt-10">
+        <h2 id="trab-title" data-trab-title className="display mt-6 text-[clamp(2.4rem,8.4vw,8.8rem)] md:mt-10">
           <span className="block overflow-hidden"><span className="block">LO QUE HE</span></span>
-          <span className="block overflow-hidden"><span className="block">CONSTRUIDO<span className="text-accent">.</span></span></span>
+          <span className="block overflow-hidden"><span className="block">CONSTRUIDO<span className="period" aria-hidden="true" /></span></span>
         </h2>
 
         <LayoutGroup>

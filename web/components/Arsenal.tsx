@@ -32,7 +32,7 @@ function Terminal({ tool }: { tool: Tool }) {
   }, [full]);
   const done = shown.length >= full.length;
   return (
-    <div className="border border-line bg-surface">
+    <div className="panel-dark border border-line shadow-[0_40px_90px_-50px_rgba(10,10,10,0.55)]">
       <div className="flex items-center gap-3 border-b border-line px-4 py-3">
         <span className="flex gap-1.5" aria-hidden="true">
           <i className="block h-2 w-2 border border-muted" /><i className="block h-2 w-2 border border-muted" /><i className="block h-2 w-2 bg-accent" />
@@ -90,7 +90,7 @@ function Tile({ tool, index, on, onPick, reg }: TileProps) {
         aria-pressed={on}
         aria-label={tool.label}
         className={`relative flex h-[92px] w-full flex-col items-center justify-center gap-2 border px-1 transition-[border-color,background-color,box-shadow] duration-300 lg:aspect-square lg:h-auto ${
-          on ? 'border-accent bg-[#1a120d] shadow-[0_0_28px_-6px_rgba(255,107,26,0.65)]' : 'border-line bg-[#0e0e0e] hover:border-[#3a3a3a]'
+          on ? 'border-accent bg-accent/[0.07] shadow-[0_12px_28px_-10px_rgb(var(--accent)/0.55)]' : 'border-line bg-surface hover:border-ink/30'
         }`}
       >
         <svg viewBox="0 0 24 24" className={`h-7 w-7 transition-[color,transform] duration-300 lg:h-9 lg:w-9 ${on ? 'scale-110 text-accent' : 'text-ink/85'}`} fill="currentColor" aria-hidden="true">
@@ -228,7 +228,7 @@ export default function Arsenal() {
     <section ref={root} id="arsenal" aria-labelledby="ars-title" className="rule relative overflow-hidden py-24 md:py-40">
       <div className="wrap">
         <p className="mono text-muted">(03) ARSENAL</p>
-        <h2 id="ars-title" data-ars-title className="display mt-6 text-[clamp(3rem,9.4vw,10rem)] md:mt-10">
+        <h2 id="ars-title" data-ars-title className="display mt-6 text-[clamp(2.1rem,6.5vw,6.9rem)] md:mt-10">
           <span className="block -mt-[0.18em] overflow-hidden pt-[0.18em]"><span className="block">TECNOLOGÍA EN</span></span>
           <span className="block -mt-[0.1em] overflow-hidden pt-[0.18em]"><span className="block"><span className="text-accent">PRODUCCIÓN</span></span></span>
         </h2>
@@ -246,17 +246,17 @@ export default function Arsenal() {
                   <motion.path
                     d={bm.d}
                     fill="none"
-                    stroke="#FF6B1A"
-                    strokeOpacity="0.55"
+                    className="stroke-accent"
+                    strokeOpacity="0.5"
                     strokeWidth="1.2"
                     initial={reduced ? false : { pathLength: 0 }}
                     animate={{ pathLength: 1 }}
                     transition={{ duration: 0.7, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
                   />
-                  <path d={bm.d} pathLength={1} fill="none" stroke="#FF8A47" strokeWidth="2.4" strokeLinecap="round" className="beam-pulse" style={{ filter: 'drop-shadow(0 0 5px #FF6B1A)', animationDelay: `${0.7 + i * 0.12}s` }} />
-                  <circle cx={bm.ex} cy={bm.ey} r="3.5" fill="#FF6B1A" />
+                  <path d={bm.d} pathLength={1} fill="none" strokeWidth="2.4" strokeLinecap="round" className="beam-pulse stroke-accentHover" style={{ filter: 'drop-shadow(0 0 4px rgb(var(--accent-hover) / 0.6))', animationDelay: `${0.7 + i * 0.12}s` }} />
+                  <circle cx={bm.ex} cy={bm.ey} r="3.5" className="fill-accent" />
                   {!reduced && (
-                    <circle cx={bm.ex} cy={bm.ey} r="3.5" fill="none" stroke="#FF6B1A">
+                    <circle cx={bm.ex} cy={bm.ey} r="3.5" fill="none" className="stroke-accent">
                       <animate attributeName="r" values="3.5;13" dur="1.6s" repeatCount="indefinite" />
                       <animate attributeName="opacity" values="0.8;0" dur="1.6s" repeatCount="indefinite" />
                     </circle>
@@ -301,10 +301,10 @@ export default function Arsenal() {
                     className={`relative flex items-center gap-4 border-b border-line transition-[background-color] duration-500 ${extra ? 'py-3' : 'py-4 lg:py-5'} ${on ? 'bg-accent/[0.06]' : ''}`}
                   >
                     <span className={`mono w-6 shrink-0 pl-1 transition-colors duration-300 ${on ? 'text-accent' : 'text-muted/50'}`}>{rowNum(p.id)}</span>
-                    <span className={`display min-w-0 truncate transition-colors duration-300 ${extra ? 'text-[1.1rem]' : 'text-[clamp(1.35rem,2.3vw,2.1rem)]'} ${on ? 'text-ink' : 'text-muted/40'}`}>{p.name}</span>
+                    <span className={`display min-w-0 truncate transition-colors duration-300 ${extra ? 'text-[0.95rem]' : 'text-[clamp(1.05rem,1.6vw,1.5rem)]'} ${on ? 'text-ink' : 'text-muted/40'}`}>{p.name}</span>
                     <span className={`mono ml-auto shrink-0 pr-1 transition-opacity duration-300 ${on ? 'text-accent opacity-100' : 'opacity-0'}`}>● EN USO</span>
                     <span
-                      className="absolute bottom-[-1px] left-0 h-[2px] w-full origin-left bg-accent shadow-[0_0_10px_0_rgba(255,107,26,0.7)] transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] lg:hidden"
+                      className="absolute bottom-[-1px] left-0 h-[2px] w-full origin-left bg-accent shadow-[0_0_8px_0_rgb(var(--accent)/0.45)] transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] lg:hidden"
                       style={{ transform: `scaleX(${on ? 0.38 : 0})` }}
                       aria-hidden="true"
                     />

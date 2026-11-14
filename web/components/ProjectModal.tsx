@@ -109,13 +109,13 @@ export default function ProjectModal({ project: p, next, viaTile, startTime, onC
         >
           <div className="md:col-span-5">
             <p className="mono text-muted">({p.num}) · {p.tag}</p>
-            <h2 id="case-title" className="display mt-4 text-[clamp(3.2rem,7vw,6.5rem)] leading-[0.95]">{p.name}</h2>
+            <h2 id="case-title" className="display mt-4 text-[clamp(2.2rem,4.8vw,4.5rem)] leading-[0.95]">{p.name}</h2>
             {p.live && <p className="mono mt-4 text-accent">● EN PRODUCCIÓN</p>}
             <p className="mt-5 text-xl font-semibold leading-snug">{p.hook}</p>
             {(p.demo || p.code) && (
               <div className="mt-8 flex flex-wrap gap-3">
                 {p.demo && (
-                  <a href={p.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-accent px-5 py-3 font-semibold text-bg transition-colors hover:bg-accentHover">
+                  <a href={p.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-accent px-5 py-3 font-semibold text-onAccent transition-colors hover:bg-accentHover">
                     Ver demo <ArrowUpRight size={16} />
                   </a>
                 )}
@@ -143,13 +143,13 @@ export default function ProjectModal({ project: p, next, viaTile, startTime, onC
           </div>
         </motion.div>
 
-        <button type="button" onClick={onNext} className="group block w-full border-t border-line text-left transition-colors hover:bg-accent hover:text-bg">
+        <button type="button" onClick={onNext} className="group block w-full border-t border-line text-left transition-colors hover:bg-accent hover:text-onAccent">
           <span className="wrap flex items-center justify-between py-8 md:py-12">
             <span>
-              <span className="mono block text-muted group-hover:text-bg">SIGUIENTE PROYECTO</span>
-              <span className="display mt-2 block text-[clamp(2rem,6vw,5rem)]">{next.name}</span>
+              <span className="mono block text-muted group-hover:text-onAccent">SIGUIENTE PROYECTO</span>
+              <span className="display mt-2 block text-[clamp(1.5rem,4vw,3.4rem)]">{next.name}</span>
             </span>
-            <span className="display text-[clamp(2rem,6vw,5rem)]">→</span>
+            <span className="display text-[clamp(1.5rem,4vw,3.4rem)]">→</span>
           </span>
         </button>
       </div>

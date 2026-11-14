@@ -58,7 +58,7 @@ export default function Preloader() {
   return (
     <div ref={root} className="fixed inset-0 z-[95] flex flex-col justify-between bg-bg p-4 md:p-8" aria-hidden="true" role="presentation">
       <p className="mono text-muted">MICHAEL CARMONA — PORTAFOLIO 2026</p>
-      <span ref={counter} className="display text-[26vw] leading-none text-ink md:text-[14vw]">000</span>
+      <span ref={counter} className="display text-[22vw] leading-none text-ink md:text-[11vw]">000</span>
     </div>
   );
 }

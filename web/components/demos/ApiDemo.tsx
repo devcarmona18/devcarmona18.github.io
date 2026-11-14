@@ -115,12 +115,12 @@ export default function ApiDemo() {
         </span>
       </div>
       <svg viewBox="0 0 400 210" className="mx-auto w-full max-w-[30rem]" role="img" aria-label="Diagrama: cliente, API y base de datos; con la API caída el pedido se desvía a WhatsApp">
-        <g stroke="#2e2e2e" strokeWidth="1" strokeDasharray="3 4">
+        <g className="stroke-line" strokeWidth="1" strokeDasharray="3 4">
           <line x1="50" y1="70" x2="350" y2="70" />
           <line x1="200" y1="70" x2="200" y2="170" />
         </g>
         {!reduced && (
-          <g fill="#F2F0EB" opacity="0.55">
+          <g className="fill-ink" opacity="0.55">
             {[0, 1.1, 2.2].map((b) => (
               <circle key={b} r="2" cy="0" cx="0">
                 <animateMotion dur="3.3s" begin={`${b}s`} repeatCount="indefinite" path="M50,70 L350,70" />
@@ -131,7 +131,7 @@ export default function ApiDemo() {
                 <animateMotion dur="2.4s" begin={`${b}s`} repeatCount="indefinite" path="M350,70 L50,70" />
               </circle>
             ))}
-            <circle r="2" fill="#FF6B1A">
+            <circle r="2" className="fill-accent">
               <animateMotion dur="2.8s" begin="0.7s" repeatCount="indefinite" path="M200,70 L200,170" />
             </circle>
           </g>
@@ -142,8 +142,8 @@ export default function ApiDemo() {
           const live = k === 'wa' && down;
           return (
             <g key={k}>
-              <rect x={p.x - 40} y={p.y - 22} width="80" height="44" fill="#0A0A0A" stroke={dead ? '#FF3B30' : live ? '#FF6B1A' : '#3a3a3a'} strokeWidth="1" />
-              <text x={p.x} y={p.y + 4} textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="10.5" letterSpacing="0.5" fill={dead ? '#FF3B30' : '#F2F0EB'}>
+              <rect x={p.x - 40} y={p.y - 22} width="80" height="44" className={`fill-bg ${dead ? 'stroke-[#FF3B30]' : live ? 'stroke-accent' : 'stroke-ink/25'}`} strokeWidth="1" />
+              <text x={p.x} y={p.y + 4} textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="10.5" letterSpacing="0.5" className={dead ? 'fill-[#FF3B30]' : 'fill-ink'}>
                 {NAMES[k]}
               </text>
               {dead && (
@@ -157,8 +157,8 @@ export default function ApiDemo() {
         })}
         {!reduced && (
           <>
-            <motion.circle r="14" fill="#FF6B1A" opacity="0.2" animate={{ cx: pos.x, cy: pos.y }} initial={false} transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }} />
-            <motion.circle r="5" fill={fail ? '#FF3B30' : '#FF6B1A'} animate={{ cx: pos.x, cy: pos.y }} initial={false} transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }} />
+            <motion.circle r="14" className="fill-accent" opacity="0.2" animate={{ cx: pos.x, cy: pos.y }} initial={false} transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }} />
+            <motion.circle r="5" className={fail ? 'fill-[#FF3B30]' : 'fill-accent'} animate={{ cx: pos.x, cy: pos.y }} initial={false} transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }} />
           </>
         )}
       </svg>

@@ -31,7 +31,7 @@ export default function ScrollCue() {
           <span className="mt-1 flex flex-col items-center">
             {[0, 1, 2].map((i) => (
               <svg key={i} className="cue-chev -mt-[5px] block" style={{ animationDelay: `${i * 0.18}s` }} width="16" height="9" viewBox="0 0 16 9" fill="none">
-                <path d="M1.5 1.5 8 7.5l6.5-6" stroke="#FF6B1A" strokeWidth="1.6" strokeLinecap="square" />
+                <path d="M1.5 1.5 8 7.5l6.5-6" className="stroke-accent" strokeWidth="1.6" strokeLinecap="square" />
               </svg>
             ))}
           </span>

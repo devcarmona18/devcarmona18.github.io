@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type MutableRefObject, type RefObject } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { RoundedBox } from '@react-three/drei';
+import { ContactShadows, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { CubePoster } from './CubePoster';
 import { ICONS, type IconSlug } from '@/data/icons';
@@ -629,10 +629,12 @@ function CubeScene({ scrollRef, onCaption, onStart, forceSolved, dragRef, rectRe
     <>
       <ambientLight intensity={0.9} />
       <directionalLight position={[4, 6, 6]} intensity={2.0} />
-      <directionalLight position={[-5, 2, 3]} intensity={0.6} color="#fff3e6" />
-      <directionalLight ref={rimLight} position={[-3, 3, -6]} intensity={1.6} color="#FF6B1A" />
-      <pointLight ref={glowLight} position={[0, 1, 7]} intensity={0} distance={16} decay={1.4} color="#FF6B1A" />
+      <directionalLight position={[-5, 2, 3]} intensity={0.6} color="#f2f5ff" />
+      <directionalLight ref={rimLight} position={[-3, 3, -6]} intensity={1.6} color="#2F6BFF" />
+      <pointLight ref={glowLight} position={[0, 1, 7]} intensity={0} distance={16} decay={1.4} color="#2F6BFF" />
       <group ref={outer}>
+        {/* sombra de contacto suave sobre el fondo claro */}
+        <ContactShadows position={[0, -2.4, 0]} scale={6.5} far={4} blur={2.4} opacity={0.25} resolution={256} color="#0A0A0A" />
         <group ref={tilt}>
           <group ref={spin}>
             <group ref={cubeRoot}>

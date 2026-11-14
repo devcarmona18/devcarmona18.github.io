@@ -17,6 +17,13 @@ export function CubePoster() {
   const oy = 70;
   return (
     <svg viewBox="0 0 400 400" className="h-full w-full" role="img" aria-label="Cubo de Rubik con los colores originales">
+      <defs>
+        <filter id="poster-shadow" x="-50%" y="-200%" width="200%" height="500%">
+          <feGaussianBlur stdDeviation="10" />
+        </filter>
+      </defs>
+      {/* sombra de contacto sobre el papel */}
+      <ellipse cx={ox} cy={oy + 6 * ky + 3 * s + 26} rx={3 * kx * 0.95} ry="16" fill="#0A0A0A" opacity="0.22" filter="url(#poster-shadow)" />
       {face(`${kx} ${ky} ${-kx} ${ky} ${ox} ${oy}`, top)}
       {face(`${kx} ${ky} 0 ${s} ${ox - 3 * kx} ${oy + 3 * ky}`, left)}
       {face(`${kx} ${-ky} 0 ${s} ${ox} ${oy + 6 * ky}`, right)}

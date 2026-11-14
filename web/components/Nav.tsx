@@ -31,7 +31,7 @@ export default function Nav() {
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 text-white mix-blend-difference">
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 bg-bg/80 text-ink backdrop-blur-md">
         <nav aria-label="Principal" className="wrap pointer-events-auto flex items-center justify-between py-4 md:py-6">
           <a href="#" onClick={(e) => { e.preventDefault(); scrollToTarget(0); }} className="mono !text-[13px] !tracking-[0.18em]" aria-label="Michael Carmona, inicio">
             MC®
@@ -83,7 +83,7 @@ export default function Nav() {
                     initial={{ y: '100%' }}
                     animate={{ y: 0 }}
                     transition={{ delay: 0.15 + i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="display flex items-baseline justify-between py-3 text-[17vw]"
+                    className="display flex items-baseline justify-between py-3 text-[10.5vw]"
                   >
                     {l.label}
                     <span className="mono text-muted">(0{i + 1})</span>

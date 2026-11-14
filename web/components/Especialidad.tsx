@@ -150,9 +150,9 @@ export default function Especialidad() {
           <p className="mono text-muted">(02) ESPECIALIDAD</p>
           <p className="mono hidden text-muted md:block">04 ÁREAS</p>
         </div>
-        <h2 id="esp-title" data-esp-title className="display mt-6 text-[clamp(4rem,15vw,15rem)] md:mt-10">
+        <h2 id="esp-title" data-esp-title className="display mt-6 text-[clamp(2.8rem,10.2vw,10.4rem)] md:mt-10">
           <span className="block overflow-hidden"><span className="block">LO QUE</span></span>
-          <span className="block overflow-hidden"><span className="block">DOMINO<span className="text-accent">.</span></span></span>
+          <span className="block overflow-hidden"><span className="block">DOMINO<span className="period" aria-hidden="true" /></span></span>
         </h2>
 
         <div
@@ -180,7 +180,7 @@ export default function Especialidad() {
                     className="group relative flex w-full items-baseline gap-4 py-5 text-left md:gap-5"
                   >
                     <span className={`mono transition-colors ${on ? 'text-accent' : 'text-muted'}`}>{e.num}</span>
-                    <span className={`display text-[clamp(2rem,4.6vw,3.6rem)] transition-colors duration-300 ${on ? 'text-ink' : 'text-muted group-hover:text-ink'}`}>
+                    <span className={`display text-[clamp(1.45rem,3.1vw,2.5rem)] transition-colors duration-300 ${on ? 'text-ink' : 'text-muted group-hover:text-ink'}`}>
                       {e.label}
                     </span>
                     <span className={`ml-auto self-center text-xl text-accent transition-transform duration-300 ${on ? 'rotate-45' : ''}`} aria-hidden="true">+</span>
@@ -189,7 +189,7 @@ export default function Especialidad() {
                         <span className="absolute bottom-[-1px] left-0 h-[2px] w-full bg-accent/15" aria-hidden="true" />
                         <span
                           ref={bar}
-                          className={`absolute bottom-[-1px] left-0 h-[2px] w-full origin-left bg-accent shadow-[0_0_10px_1px_rgba(255,107,26,0.65)] ${paused ? 'opacity-60' : ''}`}
+                          className={`absolute bottom-[-1px] left-0 h-[2px] w-full origin-left bg-accent shadow-[0_0_10px_1px_rgb(var(--accent)/0.45)] ${paused ? 'opacity-60' : ''}`}
                           style={{ transform: reduced ? 'scaleX(1)' : 'scaleX(0)' }}
                           aria-hidden="true"
                           role="presentation"
@@ -234,11 +234,11 @@ export default function Especialidad() {
               <div style={{ perspective: 1400 }} onPointerMove={onWindowMove} onPointerLeave={onWindowLeave}>
                 <motion.div
                   style={reduced ? undefined : { rotateX: rotX, rotateY: rotY, transformStyle: 'preserve-3d' }}
-                  className="border border-line bg-surface shadow-[0_30px_80px_-40px_rgba(255,107,26,0.45)]"
+                  className="panel-dark border border-line shadow-[0_40px_90px_-45px_rgba(10,10,10,0.6),0_30px_80px_-50px_rgb(var(--accent)/0.5)]"
                 >
                   <div className="flex items-center gap-3 border-b border-line px-4 py-3">
                     <span className="flex gap-1.5" aria-hidden="true">
-                      <i className="block h-2 w-2 border border-muted" /><i className="block h-2 w-2 border border-muted" /><i className="block h-2 w-2 bg-accent shadow-[0_0_8px_1px_rgba(255,107,26,0.8)]" />
+                      <i className="block h-2 w-2 border border-muted" /><i className="block h-2 w-2 border border-muted" /><i className="block h-2 w-2 bg-accent shadow-[0_0_8px_1px_rgb(var(--accent)/0.8)]" />
                     </span>
                     <span className="mono truncate !normal-case !tracking-[0.06em] text-muted">{cur.windowTitle}</span>
                     <span className="mono ml-auto flex items-center gap-2 text-muted">
@@ -275,7 +275,7 @@ export default function Especialidad() {
               <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-line pt-4">
                 {cur.stats.map((st) => (
                   <div key={cur.id + st.label}>
-                    <dt className="display text-[clamp(2.4rem,5vw,3.6rem)] text-ink">
+                    <dt className="display text-[clamp(2rem,3.6vw,2.8rem)] text-ink">
                       <CountUp value={st.value} suffix={st.suffix} />
                     </dt>
                     <dd className="mono mt-1 !normal-case !tracking-[0.04em] text-muted">{st.label}</dd>

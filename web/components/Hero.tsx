@@ -52,20 +52,26 @@ function Caption({ text }: { text: string }) {
   );
 }
 
-function Line({ text, orangeLast = false }: { text: string; orangeLast?: boolean }) {
+function Line({ text, accentLast = false }: { text: string; accentLast?: boolean }) {
   const chars = Array.from(text);
   return (
-    <span className="block overflow-hidden pb-[0.02em] pt-[0.2em] -mb-[0.02em] -mt-[0.2em]" aria-hidden="true">
-      {chars.map((c, i) => (
-        <span
-          key={i}
-          data-char
-          className={`inline-block ${orangeLast && i === chars.length - 1 ? 'text-accent' : ''}`}
-          style={{ whiteSpace: 'pre' }}
-        >
-          {c}
-        </span>
-      ))}
+    <span className="block overflow-hidden pb-[0.16em] pt-[0.24em] -mb-[0.16em] -mt-[0.24em]" aria-hidden="true">
+      {chars.map((c, i) =>
+        accentLast && i === chars.length - 1 && c === '.' ? (
+          <span key={i} data-char className="inline-block">
+            <span className="period" />
+          </span>
+        ) : (
+          <span
+            key={i}
+            data-char
+            className={`inline-block ${accentLast && i === chars.length - 1 ? 'text-accent' : ''}`}
+            style={{ whiteSpace: 'pre' }}
+          >
+            {c}
+          </span>
+        ),
+      )}
     </span>
   );
 }
@@ -119,10 +125,10 @@ export default function Hero() {
       <div className="wrap rule mt-3 w-full" />
 
       <div className="wrap relative mt-6 flex flex-1 flex-col md:mt-10 md:justify-center">
-        <h1 id="hero-title" data-hero-title className="display relative z-10 text-[16.5vw] md:text-[min(13.2vw,17.5rem)]">
+        <h1 id="hero-title" data-hero-title className="display relative z-10 text-[15.4vw] md:text-[min(8.9vw,11.6rem)]">
           <span className="sr-only">Código que resuelve.</span>
           <Line text="CÓDIGO QUE" />
-          <span className="block mt-[0.1em]"><Line text="RESUELVE." orangeLast /></span>
+          <span className="block mt-[0.02em]"><Line text="RESUELVE." accentLast /></span>
         </h1>
 
         <div className="relative z-20 mx-auto mt-2 aspect-square w-[74vw] max-w-[460px] md:absolute md:right-[-3vw] md:top-1/2 md:mt-0 md:w-[48vw] md:max-w-[780px] md:-translate-y-[46%]">
@@ -141,7 +147,7 @@ export default function Hero() {
               <a
                 href="#trabajo"
                 onClick={(e) => { e.preventDefault(); scrollToTarget('#trabajo'); }}
-                className="inline-flex items-center gap-3 bg-accent px-6 py-4 text-[0.95rem] font-semibold text-[#0a0a0a] transition-colors hover:bg-accentHover"
+                className="inline-flex items-center gap-3 bg-accent px-6 py-4 text-[0.95rem] font-semibold text-onAccent transition-colors hover:bg-accentHover"
               >
                 Ver lo que he construido <span aria-hidden="true">↓</span>
               </a>

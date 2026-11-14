@@ -12,7 +12,7 @@ import Contacto from '@/components/Contacto';
 export default function Page() {
   return (
     <>
-      <a href="#trabajo" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:bg-accent focus:px-4 focus:py-2 focus:text-bg">
+      <a href="#trabajo" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:bg-accent focus:px-4 focus:py-2 focus:text-onAccent">
         Saltar al contenido
       </a>
       <Preloader />
